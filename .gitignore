@@ -1,0 +1,24 @@
+# Exclude data folder contents
+data/*
+!data/database/*.cnf
+!data/database/binlog.index
+!data/database/ib_buffer_pool
+*.sock
+
+# Backend exclusions
+portfolio-final/.idea/
+portfolio-final/.gradle/
+portfolio-final/build/
+portfolio-final/out/
+
+# Frontend exclusions
+frontend/node_modules/
+frontend/dist/
+
+# Docker-specific exclusions
+*.env
+docker-compose.override.yml
+
+# System files
+*.DS_Store
+Thumbs.db

@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  database:
+    image: mysql:8.0
+    container_name: database
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpwd
+      MYSQL_DATABASE: portfolio-db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pwd
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data/database:/var/lib/mysql
+      - ./data/init.d:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-uuser", "-ppwd", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./portfolio-final
+      dockerfile: Dockerfile
+    container_name: portfolio-final
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/portfolio-db
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: pwd
+    depends_on:
+      - database
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "5173:5173"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    links:
+      - database
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      PMA_ARBITRARY: 1
+    depends_on:
+      - database
+
+volumes:
+  mysql_data:
