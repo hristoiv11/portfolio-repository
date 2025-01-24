@@ -1,3 +1,4 @@
+.idea/  # Ignore IntelliJ project files
 # Exclude data folder contents
 data/*
 !data/database/*.cnf
