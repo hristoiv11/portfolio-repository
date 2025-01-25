@@ -2,7 +2,7 @@ import React from 'react';
 import "../App.css";
 
 
-const Testimonials: React.FC = () => {
+const Reviews: React.FC = () => {
     const testimonials = [
         {
             name: 'Maria Escobito',
@@ -23,7 +23,7 @@ const Testimonials: React.FC = () => {
 
     return (
         <div className="testimonials">
-            <h1>Testimonials</h1>
+            <h1>Reviews</h1>
             <ul>
                 {testimonials.map((testimonial, index) => (
                     <li key={index} className="testimonial-card">
@@ -37,4 +37,4 @@ const Testimonials: React.FC = () => {
     );
 };
 
-export default Testimonials;
+export default Reviews;
