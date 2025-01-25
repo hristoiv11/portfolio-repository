@@ -110,16 +110,13 @@ import About from './pages/About';
 import Projects from './pages/Projects';
 import Skills from './pages/Skills';
 import Contact from './pages/Contact';
-import Testimonials from './pages/Testimonials';
+import Reviews from './pages/Reviews.tsx';
 import Navbar from "./navbar/Navbar.tsx";
 import Login from "./pages/Login.tsx";
 
 function App() {
     return (
         <Router>
-            <div className="header-left">
-                <h1>Hristo Georgiev Ivanov</h1>
-            </div>
             <Navbar/>
             <Routes>
                 <Route path="/" element={<Home />} />
@@ -127,7 +124,7 @@ function App() {
                 <Route path="/projects" element={<Projects />} />
                 <Route path="/skills" element={<Skills />} />
                 <Route path="/contact" element={<Contact />} />
-                <Route path="/testimonials" element={<Testimonials />} />
+                <Route path="/reviews" element={<Reviews />} />
                 <Route path="/login" element={<Login />} />
                 {/*<Route path="/reviews" element={<Reviews />} />*/}
             </Routes>

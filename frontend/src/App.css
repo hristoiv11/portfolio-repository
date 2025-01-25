@@ -10,18 +10,37 @@
 .navbar {
   background-color: #333;
   padding: 1rem;
-  position: fixed; /* Makes the navbar fixed at the top */
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%; /* Makes the navbar span the full width of the screen */
-  z-index: 1000; /* Ensures the navbar stays on top of other elements */
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space between brand (name), links, and login button */
+  flex-wrap: wrap;
+}
+
+.navbar-center {
+  flex-grow: 1; /* Allows the center section to take available space */
+  text-align: center;
+  margin-right: 7rem;
+}
+
+/* Navbar brand (name) */
+.navbar-brand {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-right: 2rem; /* Spacing from the links */
+  white-space: nowrap;
 }
 
 /* Navbar list */
 .navbar ul {
   list-style: none;
-  display: flex;
-  justify-content: center; /* Centers the navigation links */
+  display: inline-flex; /* Inline to center items */
+  gap: 1rem;
   margin: 0;
   padding: 0;
 }
@@ -32,96 +51,90 @@
   text-decoration: none;
   padding: 0.5rem 1rem;
   transition: background-color 0.3s ease;
+  font-size: 1rem;
+  white-space: nowrap;
 }
 
 .navbar a:hover {
-  background-color: #444; /* Adds a hover effect */
-  border-radius: 5px; /* Optional: Adds rounded corners to links */
+  background-color: #444;
+  border-radius: 5px;
 }
 
-/* Add spacing to prevent content from overlapping with the navbar */
-body {
-  margin: 0;
-  padding: 0;
-  padding-top: 4rem; /* Adjust this value based on the navbar height */
+/* Navbar login button */
+.navbar-login {
+  margin-left: auto;
+  margin-right: 2rem; /* Added spacing to ensure proper visibility */
 }
 
-/* Optional: Logo Hover Effects */
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-/* Top-left header styles */
-.header-left {
-  position: fixed; /* Keeps it at the top-left corner */
-  top: 0;
-  left: 0;
-  padding: 1rem;
-  background-color: #333; /* Dark background to match navbar */
+.login-button {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
   color: white;
-  z-index: 1001; /* Ensures it's above other elements */
-}
-
-.header-left h1 {
-  font-size: 1.25rem;
-  margin: 0;
-  font-weight: bold;
-}
-
-.header-left p {
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
   font-size: 1rem;
-  margin: 0.25rem 0 0;
-  color: #ccc;
 }
 
+.login-button:hover {
+  background-color: #0056b3;
+}
+
+/* Projects */
 .projects {
   padding: 2rem;
   text-align: center;
 }
 
 .projects ul {
-  list-style: none;
-  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  list-style: none; /* Removes bullet points */
+  padding: 0;       /* Removes default padding */
+  margin: 0;
 }
 
 .projects li {
-  margin: 1rem 0;
+  flex: 1 1 calc(25% - 1rem);
+  max-width: 300px;
+  min-width: 200px;
   border: 1px solid #ddd;
-  padding: 1rem;
   border-radius: 5px;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  text-align: center;
+  box-sizing: border-box;
   transition: box-shadow 0.3s ease;
+  display: flex; /* Make the card a flex container */
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: space-between;
 }
 
 .projects li:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.projects h2 {
-  margin: 0.5rem 0;
+.projects img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 1rem;
 }
 
-/* Unified button styles for View Details and Visit Project */
+/* Unified button styles */
 .projects button,
 .projects a {
   margin: 0.5rem;
   padding: 0.5rem 1rem;
   background-color: #333;
   color: white;
-  text-decoration: none; /* Ensures links behave like buttons */
+  text-decoration: none;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  display: inline-block; /* Ensures proper button-like appearance */
 }
 
 .projects button:hover,
@@ -129,7 +142,7 @@ body {
   background-color: #555;
 }
 
-/* Modal styles */
+/* Modal */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -175,57 +188,60 @@ body {
   background-color: #c0392b;
 }
 
-.home {
-  text-align: center;
-  padding: 2rem;
-  font-family: Arial, sans-serif;
-}
-
-.home h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-.home p {
-  font-size: 1.25rem;
-  margin-bottom: 2rem;
-}
-
-.button-group {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
+/* Unified button styles */
 .btn {
-  padding: 0.75rem 1.5rem;
-  background-color: #333;
+  margin: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #333; /* Match the projects button color */
   color: white;
+  text-decoration: none;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1rem;
   transition: background-color 0.3s ease;
 }
 
 .btn:hover {
-  background-color: #555;
+  background-color: #555; /* Match the hover color */
 }
 
-.navbar-login {
-  margin-left: auto;
-}
-
-.login-button {
-  padding: 0.5rem 1rem;
-  background-color: #007bff; /* Blue button */
-  color: white;
-  text-decoration: none;
+.about-image {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  margin-top: 80px;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional for aesthetics */
 }
 
-.login-button:hover {
-  background-color: #0056b3; /* Darker blue */
+.languages {
+  display: flex;
+  gap: 2rem; /* Spacing between each language item */
+  justify-content: center;
+  align-items: flex-start; /* Align items to the top for uniform text alignment */
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
 }
+
+.language-item {
+  text-align: center;
+  width: 100px; /* Ensures consistent width for alignment */
+}
+
+.flag {
+  width: 80px; /* Consistent flag width */
+  height: 50px; /* Set a fixed height for consistency */
+  border: 2px solid #ddd; /* Uniform border thickness */
+  border-radius: 10px; /* Rounded corners */
+  margin-bottom: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for polish */
+}
+
+.language-text {
+  font-size: 1rem;
+  font-weight: 500; /* Slightly bolder text for better readability */
+  margin-top: 0.25rem;
+}
+
+

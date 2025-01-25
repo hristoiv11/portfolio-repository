@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 interface Project {
-    id: number;
+    id: number | null; // Allow for possible null values
     name: string;
     description: string;
     technologies: string;
@@ -16,7 +16,14 @@ const Projects: React.FC = () => {
     useEffect(() => {
         fetch("http://localhost:8080/api/projects")
             .then((response) => response.json())
-            .then((data) => setProjects(data))
+            .then((data) => {
+                // Ensure each project has a unique id fallback if id is missing
+                const processedData = data.map((project: Project, index: number) => ({
+                    ...project,
+                    id: project.id ?? index, // Use index as fallback for missing id
+                }));
+                setProjects(processedData);
+            })
             .catch((error) =>
                 console.error("Error fetching projects:", error)
             );
@@ -35,7 +42,7 @@ const Projects: React.FC = () => {
             <h1>Projects</h1>
             <ul>
                 {projects.map((project) => (
-                    <li key={project.id}>
+                    <li key={project.id || Math.random()}> {/* Use id or a fallback */}
                         <img
                             src={project.image}
                             alt={project.name}
@@ -67,12 +74,10 @@ const Projects: React.FC = () => {
                     <div className="modal">
                         <h2>{selectedProject.name}</h2>
                         <p>
-                            <strong>Description:</strong>{" "}
-                            {selectedProject.description}
+                            <strong>Description:</strong> {selectedProject.description}
                         </p>
                         <p>
-                            <strong>Technologies:</strong>{" "}
-                            {selectedProject.technologies}
+                            <strong>Technologies:</strong> {selectedProject.technologies}
                         </p>
                         <button
                             className="btn-close"

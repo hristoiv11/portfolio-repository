@@ -22,3 +22,12 @@ CREATE TABLE IF NOT EXISTS projects (
     link VARCHAR(255),
     image LONGBLOB
 );
+
+DROP TABLE IF EXISTS about;
+CREATE TABLE IF NOT EXISTS about (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    aboutid VARCHAR(36) NOT NULL UNIQUE,
+    image LONGBLOB,
+    description TEXT,
+    languages VARCHAR(255)
+    );
