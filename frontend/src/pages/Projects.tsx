@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-
+//import '../css/Projects.css';
+import "../App.css";
 interface Project {
     id: number | null; // Allow for possible null values
     name: string;

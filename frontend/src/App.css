@@ -1,4 +1,4 @@
-/* Root container */
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -6,7 +6,15 @@
   text-align: center;
 }
 
-/* Navbar */
+body {
+  background-color: #1e293b;
+  color: white;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* NAVBAR CSS */
+
 .navbar {
   background-color: #333;
   padding: 1rem;
@@ -17,35 +25,32 @@
   z-index: 1000;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Space between brand (name), links, and login button */
+  justify-content: space-between;
   flex-wrap: wrap;
 }
 
 .navbar-center {
-  flex-grow: 1; /* Allows the center section to take available space */
+  flex-grow: 1;
   text-align: center;
   margin-right: 7rem;
 }
 
-/* Navbar brand (name) */
 .navbar-brand {
   color: white;
   font-size: 1.25rem;
   font-weight: bold;
-  margin-right: 2rem; /* Spacing from the links */
+  margin-right: 2rem;
   white-space: nowrap;
 }
 
-/* Navbar list */
 .navbar ul {
   list-style: none;
-  display: inline-flex; /* Inline to center items */
+  display: inline-flex;
   gap: 1rem;
   margin: 0;
   padding: 0;
 }
 
-/* Navbar links */
 .navbar a {
   color: white;
   text-decoration: none;
@@ -60,10 +65,9 @@
   border-radius: 5px;
 }
 
-/* Navbar login button */
 .navbar-login {
   margin-left: auto;
-  margin-right: 2rem; /* Added spacing to ensure proper visibility */
+  margin-right: 2rem;
 }
 
 .login-button {
@@ -80,7 +84,8 @@
   background-color: #0056b3;
 }
 
-/* Projects */
+/* PROJECTS CSS */
+
 .projects {
   padding: 2rem;
   text-align: center;
@@ -91,8 +96,8 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 1rem;
-  list-style: none; /* Removes bullet points */
-  padding: 0;       /* Removes default padding */
+  list-style: none;
+  padding: 0;
   margin: 0;
 }
 
@@ -103,12 +108,12 @@
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 1rem;
-  background-color: #f9f9f9;
+  background-color: black;
   text-align: center;
   box-sizing: border-box;
   transition: box-shadow 0.3s ease;
-  display: flex; /* Make the card a flex container */
-  flex-direction: column; /* Stack elements vertically */
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
 }
 
@@ -123,7 +128,6 @@
   margin-bottom: 1rem;
 }
 
-/* Unified button styles */
 .projects button,
 .projects a {
   margin: 0.5rem;
@@ -142,7 +146,6 @@
   background-color: #555;
 }
 
-/* Modal */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -157,7 +160,7 @@
 }
 
 .modal {
-  background: #fff;
+  background: black;
   padding: 2rem;
   border-radius: 8px;
   max-width: 500px;
@@ -184,15 +187,16 @@
   transition: background-color 0.3s ease;
 }
 
+/* HOME PAGE CSS */
+
 .btn-close:hover {
   background-color: #c0392b;
 }
 
-/* Unified button styles */
 .btn {
   margin: 0.5rem;
   padding: 0.5rem 1rem;
-  background-color: #333; /* Match the projects button color */
+  background-color: black;
   color: white;
   text-decoration: none;
   border: none;
@@ -202,9 +206,46 @@
 }
 
 .btn:hover {
-  background-color: #555; /* Match the hover color */
+  background-color: #555;
 }
 
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #333;
+  color: white;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.dropdown-item {
+  padding: 0.5rem 1rem;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.dropdown-item:hover {
+  background-color: #555;
+}
+
+
+/* ABOUT PAGE CSS */
 .about-image {
   width: 100%;
   max-width: 300px;
@@ -212,36 +253,439 @@
   margin-top: 80px;
   border-radius: 5px;
   margin-bottom: 1rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional for aesthetics */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .languages {
   display: flex;
-  gap: 2rem; /* Spacing between each language item */
+  gap: 2rem;
   justify-content: center;
-  align-items: flex-start; /* Align items to the top for uniform text alignment */
+  align-items: flex-start;
   flex-wrap: wrap;
   margin-top: 1.5rem;
 }
 
 .language-item {
   text-align: center;
-  width: 100px; /* Ensures consistent width for alignment */
+  width: 100px;
 }
 
 .flag {
-  width: 80px; /* Consistent flag width */
-  height: 50px; /* Set a fixed height for consistency */
-  border: 2px solid #ddd; /* Uniform border thickness */
-  border-radius: 10px; /* Rounded corners */
+  width: 80px;
+  height: 50px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
   margin-bottom: 0.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for polish */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .language-text {
   font-size: 1rem;
-  font-weight: 500; /* Slightly bolder text for better readability */
+  font-weight: 500;
   margin-top: 0.25rem;
 }
 
+/*SKILLS PAGE CSS */
 
+.skills-page {
+  padding: 2rem;
+  text-align: center;
+  background-color: #1e293b;
+  min-height: 100vh;
+  color: #ffffff;
+}
+
+.skills-title {
+  color: #ffffff;
+}
+
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.skill-category {
+  flex: 1 1 calc(45% - 2rem);
+  max-width: 500px;
+  background: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.skill-category:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.skill-category h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.skill-category ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.skill-category li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: #555;
+  font-weight: 500;
+}
+
+.skill-category li::before {
+  content: "✔";
+  font-size: 1.2rem;
+  color: #007bff;
+  margin-right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .skills {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .skill-category {
+    flex: 1 1 100%;
+  }
+
+  .skill-category ul {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* CONTACT PAGE CSS */
+
+.contact-page {
+  padding: 2rem;
+  text-align: center;
+  background-color: #1e293b;
+  min-height: 100vh;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact-container {
+  display: flex;
+  flex-direction: row; /* Arrange horizontally */
+  gap: 2rem; /* Space between sections */
+  width: 100%; /* Full page width */
+  max-width: 1280px; /* Ensure it does not exceed container */
+}
+
+.contact-info-section,
+.contact-form-section {
+  flex: 1; /* Equal space for both sections */
+  background: #ffffff; /* Card background */
+  border-radius: 1rem; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  padding: 2rem; /* Padding inside the sections */
+  text-align: left;
+  color: #333;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-info-section:hover,
+.contact-form-section:hover {
+  transform: translateY(-5px); /* Slight lift on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+}
+
+.contact-info-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.contact-info-section h1,
+.contact-form-section h1 {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #1e293b;
+}
+
+.contact-info p,
+.contact-info a {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.contact-info a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.contact-info a:hover {
+  text-decoration: underline;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .contact-container {
+    flex-direction: column; /* Stack sections vertically on smaller screens */
+  }
+
+  .contact-info-section,
+  .contact-form-section {
+    flex: 1 1 100%; /* Full width for smaller devices */
+    max-width: 100%;
+  }
+}
+
+
+
+/* LOGIN PAGE CSS */
+
+.login {
+  background-color: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1e293b;
+  margin-bottom: 1.5rem;
+}
+
+.login form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.login form label {
+  font-size: 1rem;
+  color: #1e293b;
+  text-align: left;
+  width: 100%;
+}
+
+.login form input {
+  width: 100%;
+  max-width: 300px;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+.login form input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+}
+
+.login button {
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login button:hover {
+  background-color: #0056b3;
+}
+
+.login button:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 768px) {
+  .login {
+    padding: 1.5rem;
+    width: 90%;
+  }
+
+  .login button {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* REVIEW PAGE CSS */
+
+.reviews-page {
+  padding: 2rem;
+  background-color: #1e293b;
+  color: #ffffff;
+  min-height: 100vh;
+}
+
+.review-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.review-form,
+.review-list {
+  flex: 1 1 calc(50% - 2rem);
+  max-width: 600px;
+  background: #ffffff;
+  color: #333;
+  border-radius: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  text-align: left;
+}
+
+.review-form h2,
+.review-list h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.review-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.review-form input,
+.review-form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.review-form button {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.review-form button:hover {
+  background-color: #0056b3;
+}
+
+.review-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.review-list .review-item {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.review-list .review-item h3 {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .review-container {
+    flex-direction: column;
+  }
+
+  .review-form,
+  .review-list {
+    max-width: 100%;
+  }
+}
+
+.star-rating span {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #ddd;
+  transition: color 0.3s ease;
+}
+
+.star-rating .filled-star {
+  color: #ffc107;
+}
+
+.star-rating .empty-star:hover,
+.star-rating .filled-star:hover ~ .empty-star {
+  color: #ffcd39;
+}
+
+.star-display {
+  font-size: 1.5rem;
+  color: #ffc107;
+}

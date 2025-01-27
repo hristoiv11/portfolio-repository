@@ -1,0 +1,92 @@
+/* Skills Page Container */
+.skills-page {
+    padding: 2rem;
+    text-align: center;
+    background-color: #1e293b; /* Dark slate color for contrast */
+    min-height: 100vh; /* Full viewport height */
+    color: #ffffff; /* White text for better contrast */
+}
+
+/* Adjusting Title Color */
+.skills-title {
+    color: #ffffff;
+}
+
+
+/* Skills Container */
+.skills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+/* Individual Skill Container */
+.skill-category {
+    flex: 1 1 calc(45% - 2rem); /* Flexible layout with two containers per row */
+    max-width: 500px;
+    background: #ffffff; /* White background for cards */
+    border-radius: 1rem; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.skill-category:hover {
+    transform: translateY(-5px); /* Slight lift effect on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+/* Skill Category Header */
+.skill-category h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+/* Skill List */
+.skill-category ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two-column layout */
+    gap: 1rem;
+}
+
+/* Individual Skill Item */
+.skill-category li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    color: #555;
+    font-weight: 500;
+}
+
+/* Skill Icon (Checkmark) */
+.skill-category li::before {
+    content: "✔"; /* Checkmark icon */
+    font-size: 1.2rem;
+    color: #007bff; /* Blue color for the icon */
+    margin-right: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .skills {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .skill-category {
+        flex: 1 1 100%; /* Full width on smaller screens */
+    }
+
+    .skill-category ul {
+        grid-template-columns: 1fr; /* Single-column layout */
+    }
+}

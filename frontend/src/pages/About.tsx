@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import "../App.css";
-
+//import '../css/AboutPage.css';
 interface AboutData {
     aboutId: string;
     image: string; // This will hold the URL or Base64 string of the image
