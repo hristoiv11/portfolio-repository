@@ -1,0 +1,10 @@
+.reviews-page {
+    text-align: center; /* Center all text */
+    max-width: 1280px; /* Limit the width */
+    margin: 0 auto; /* Center the section horizontally */
+    padding: 2rem; /* Add padding */
+}
+
+.review-item {
+    margin: 1rem 0; /* Space between reviews */
+}

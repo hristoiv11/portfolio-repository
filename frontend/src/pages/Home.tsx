@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "../App.css";
 
 const Home: React.FC = () => {
-    const handleDownloadCV = () => {
-        const cvUrl = "/cv/Hristo_Ivanov_CV.pdf"; // Replace with the actual path to your CV
+    const [showCVOptions, setShowCVOptions] = useState<boolean>(false);
+
+    const handleDownloadCV = (language: string) => {
+        const cvUrl =
+            language === "English"
+                ? "/cv/Hristo_Ivanov_CV_English.pdf" // Replace with the actual path to the English CV
+                : "/cv/Hristo_Ivanov_CV_French.pdf"; // Replace with the actual path to the French CV
         window.open(cvUrl, "_blank");
+        setShowCVOptions(false); // Hide the dropdown after selection
     };
 
     const handleLeaveReview = () => {
@@ -19,9 +25,32 @@ const Home: React.FC = () => {
             </p>
 
             <div className="button-group">
-                <button onClick={handleDownloadCV} className="btn">
-                    Download CV
-                </button>
+                {/* Download CV Button */}
+                <div className="dropdown-container">
+                    <button
+                        onClick={() => setShowCVOptions(!showCVOptions)}
+                        className="btn"
+                    >
+                        Download CV
+                    </button>
+                    {showCVOptions && (
+                        <div className="dropdown-menu">
+                            <button
+                                onClick={() => handleDownloadCV("English")}
+                                className="dropdown-item"
+                            >
+                                English CV
+                            </button>
+                            <button
+                                onClick={() => handleDownloadCV("French")}
+                                className="dropdown-item"
+                            >
+                                French CV
+                            </button>
+                        </div>
+                    )}
+                </div>
+
                 <button onClick={handleLeaveReview} className="btn">
                     Leave a Review
                 </button>

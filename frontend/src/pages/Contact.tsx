@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import "../App.css";
 
 const Contact: React.FC = () => {
-    const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+    const [formData, setFormData] = useState({ name: "", email: "", message: "" });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -11,45 +11,75 @@ const Contact: React.FC = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        alert('Message Sent!'); // Replace with your backend logic for sending messages
-        setFormData({ name: '', email: '', message: '' });
+        alert("Message Sent!"); // Replace with your backend logic for sending messages
+        setFormData({ name: "", email: "", message: "" });
+    };
+
+    const aboutData = {
+        email: "example@email.com",
+        phone: "123-456-7890",
+        linkedin: "https://linkedin.com/in/example",
     };
 
     return (
-        <div className="contact">
-            <h1>Contact Me</h1>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Name:
-                    <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                    />
-                </label>
-                <label>
-                    Email:
-                    <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                    />
-                </label>
-                <label>
-                    Message:
-                    <textarea
-                        name="message"
-                        value={formData.message}
-                        onChange={handleChange}
-                        required
-                    ></textarea>
-                </label>
-                <button type="submit">Send</button>
-            </form>
+        <div className="contact-page">
+            <div className="contact-container">
+                {/* Contact Info */}
+                <div className="contact-info-section">
+                    <h1>Contact Info</h1>
+                    <div className="contact-info">
+                        <p>Email: {aboutData.email}</p>
+                        <p>Phone: {aboutData.phone}</p>
+                        <p>
+                            LinkedIn:{" "}
+                            <a
+                                href={aboutData.linkedin}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                {aboutData.linkedin}
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+                {/* Contact Form */}
+                <div className="contact-form-section">
+                    <h1>Contact Me</h1>
+                    <form onSubmit={handleSubmit}>
+                        <label>
+                            Name:
+                            <input
+                                type="text"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                required
+                            />
+                        </label>
+                        <label>
+                            Email:
+                            <input
+                                type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                            />
+                        </label>
+                        <label>
+                            Message:
+                            <textarea
+                                name="message"
+                                value={formData.message}
+                                onChange={handleChange}
+                                required
+                            ></textarea>
+                        </label>
+                        <button type="submit">Send</button>
+                    </form>
+                </div>
+            </div>
         </div>
     );
 };

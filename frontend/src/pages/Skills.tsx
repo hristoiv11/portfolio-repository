@@ -1,49 +1,69 @@
-import React from 'react';
-import "../App.css";
-
-
+import React from "react";
+//import '../css/Skills.css';
+import '../App.css';
 const Skills: React.FC = () => {
     const skills = {
-        languages: ['Java', 'JavaScript', 'C#', 'TypeScript', 'Python'],
-        frameworks: ['Spring Boot', 'React', 'ASP.NET Core'],
-        tools: ['Docker', 'Git', 'Jira', 'Figma'],
-        databases: ['MySQL', 'PostgreSQL', 'MongoDB'],
+        languages: ['C#', 'Java', 'JavaScript', 'Python', 'Familiar with PHP'],
+        frameworks: ['ASP.NET Core', 'MVC', 'Spring Boot', 'React'],
+        tools: [
+            'Docker',
+            'Git',
+            'GitHub',
+            'Jira',
+            'Figma',
+            'Azure SQL',
+            'Azure SQL Database',
+            'DNS',
+            'Firewalls'
+        ],
+        databases: ['MySQL', 'PostgreSQL', 'MongoDB', 'MariaDB'],
+        methodologies: ['Agile', 'Microservices', 'TDD', 'CI/CD', 'RESTful APIs'],
     };
 
     return (
-        <div className="skills">
-            <h1>Skills</h1>
-            <div className="skill-category">
-                <h2>Programming Languages</h2>
-                <ul>
-                    {skills.languages.map((skill, index) => (
-                        <li key={index}>{skill}</li>
-                    ))}
-                </ul>
-            </div>
-            <div className="skill-category">
-                <h2>Frameworks & Libraries</h2>
-                <ul>
-                    {skills.frameworks.map((skill, index) => (
-                        <li key={index}>{skill}</li>
-                    ))}
-                </ul>
-            </div>
-            <div className="skill-category">
-                <h2>Tools & Technologies</h2>
-                <ul>
-                    {skills.tools.map((skill, index) => (
-                        <li key={index}>{skill}</li>
-                    ))}
-                </ul>
-            </div>
-            <div className="skill-category">
-                <h2>Databases</h2>
-                <ul>
-                    {skills.databases.map((skill, index) => (
-                        <li key={index}>{skill}</li>
-                    ))}
-                </ul>
+        <div className="skills-page">
+            <h1 className="skills-title">Skills</h1>
+            <div className="skills">
+                <div className="skill-category">
+                    <h2>Programming Languages</h2>
+                    <ul>
+                        {skills.languages.map((skill, index) => (
+                            <li key={index}>{skill}</li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="skill-category">
+                    <h2>Frameworks & Libraries</h2>
+                    <ul>
+                        {skills.frameworks.map((skill, index) => (
+                            <li key={index}>{skill}</li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="skill-category">
+                    <h2>Tools & Technologies</h2>
+                    <ul>
+                        {skills.tools.map((skill, index) => (
+                            <li key={index}>{skill}</li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="skill-category">
+                    <h2>Databases</h2>
+                    <ul>
+                        {skills.databases.map((skill, index) => (
+                            <li key={index}>{skill}</li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="skill-category">
+                    <h2>Methodologies</h2>
+                    <ul>
+                        {skills.methodologies.map((skill, index) => (
+                            <li key={index}>{skill}</li>
+                        ))}
+                    </ul>
+                </div>
             </div>
         </div>
     );
