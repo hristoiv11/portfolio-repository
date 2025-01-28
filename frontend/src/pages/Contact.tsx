@@ -16,9 +16,9 @@ const Contact: React.FC = () => {
     };
 
     const aboutData = {
-        email: "example@email.com",
-        phone: "123-456-7890",
-        linkedin: "https://linkedin.com/in/example",
+        email: "hristogr85@gmail.com",
+        phone: "514-965-4697",
+        linkedin: "https://www.linkedin.com/in/hristo-ivanov-a65245327/",
     };
 
     return (

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import "../App.css";
-//import '../css/AboutPage.css';
+
 interface AboutData {
     aboutId: string;
     image: string; // This will hold the URL or Base64 string of the image
@@ -15,7 +15,6 @@ const About: React.FC = () => {
         fetch("http://localhost:8080/api/about/1") // Adjust the ID as needed
             .then((response) => response.json())
             .then((data) => {
-                // Assuming languages are returned as a comma-separated string
                 const languagesArray = data.languages.split(',').map((lang: string) => lang.trim());
                 setAboutData({ ...data, languages: languagesArray });
             })
@@ -36,25 +35,29 @@ const About: React.FC = () => {
 
     return (
         <div className="about">
-            <img
-                src={aboutData.image} // Use the image URL from the fetched data
-                alt="About Me"
-                className="about-image"
-            />
-            <h1>About Me</h1>
-            <p>{aboutData.description}</p>
-            <h1>Languages</h1>
-            <div className="languages">
-                {aboutData.languages.map((language) => (
-                    <div key={language} className="language-item">
-                        <img
-                            src={flagMapping[language] || ""}
-                            alt={language}
-                            className="flag"
-                        />
-                        <p>{language}</p>
-                    </div>
-                ))}
+            <div className="oval-container">
+                <img
+                    src={aboutData.image}
+                    alt="About Me"
+                    className="about-image"
+                />
+                <h1>About Me</h1>
+                <p>{aboutData.description}</p>
+            </div>
+            <div className="languages-container">
+                <h1>Languages</h1>
+                <div className="languages">
+                    {aboutData.languages.map((language) => (
+                        <div key={language} className="language-item">
+                            <img
+                                src={flagMapping[language] || ""}
+                                alt={language}
+                                className="flag"
+                            />
+                            <p>{language}</p>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     );
