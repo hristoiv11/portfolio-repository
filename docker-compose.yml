@@ -4,6 +4,8 @@ services:
   database:
     image: mysql:8.0
     container_name: database
+    env_file:
+      - .env
     environment:
       MYSQL_ROOT_PASSWORD: rootpwd
       MYSQL_DATABASE: portfolio-db
@@ -27,6 +29,8 @@ services:
     container_name: portfolio-final
     ports:
       - "8080:8080"
+    env_file:
+      - .env
     environment:
       SPRING_PROFILES_ACTIVE: docker
       SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/portfolio-db
