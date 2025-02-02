@@ -11,6 +11,7 @@ portfolio-final/.idea/
 portfolio-final/.gradle/
 portfolio-final/build/
 portfolio-final/out/
+portfolio-final/.env
 
 # Frontend exclusions
 frontend/node_modules/
