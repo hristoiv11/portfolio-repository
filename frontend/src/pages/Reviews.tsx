@@ -2,36 +2,78 @@ import React, { useState, useEffect } from 'react';
 import "../App.css";
 
 interface Review {
+    id: number;
     name: string;
     message: string;
-    rating: number; // Add rating property
+    rating: number;
 }
 
 const Reviews: React.FC = () => {
     const [reviews, setReviews] = useState<Review[]>([]);
     const [name, setName] = useState<string>('');
     const [message, setMessage] = useState<string>('');
-    const [rating, setRating] = useState<number>(0); // State for star rating
+    const [rating, setRating] = useState<number>(0);
+    const [statusMessage, setStatusMessage] = useState<string | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    useEffect(() => {
-        const savedReviews = localStorage.getItem('reviews');
-        if (savedReviews) {
-            setReviews(JSON.parse(savedReviews));
+    // ✅ Function to fetch approved reviews
+    const fetchReviews = async () => {
+        try {
+            const response = await fetch("http://localhost:8080/api/reviews/approved");
+            if (!response.ok) throw new Error("Failed to fetch reviews");
+            const data: Review[] = await response.json();
+            setReviews(data);
+        } catch (error) {
+            console.error("Error fetching reviews:", error);
         }
+    };
+
+    // ✅ Fetch reviews immediately & set interval for auto-refresh
+    useEffect(() => {
+        fetchReviews(); // Fetch immediately when component mounts
+
+        const interval = setInterval(fetchReviews, 5000); // Refresh every 5 seconds
+        return () => clearInterval(interval); // Cleanup on unmount
     }, []);
 
-    useEffect(() => {
-        localStorage.setItem('reviews', JSON.stringify(reviews));
-    }, [reviews]);
-
-    const handleSubmit = (e: React.FormEvent) => {
+    // ✅ Handle review submission
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (name.trim() && message.trim() && rating > 0) {
-            const newReview: Review = { name, message, rating };
-            setReviews([...reviews, newReview]);
-            setName('');
-            setMessage('');
-            setRating(0);
+        setIsSubmitting(true);
+        setStatusMessage(null);
+
+        if (!name.trim() || !message.trim() || rating === 0) {
+            setStatusMessage("❌ Please fill out all fields and select a rating.");
+            setIsSubmitting(false);
+            return;
+        }
+
+        const reviewData = { name, message, rating };
+
+        try {
+            const response = await fetch("http://localhost:8080/api/reviews/submit", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(reviewData),
+            });
+
+            if (response.ok) {
+                setStatusMessage("✅ Review submitted!");
+                setName('');
+                setMessage('');
+                setRating(0);
+
+                setTimeout(() => setStatusMessage(null), 3000);
+            } else {
+                setStatusMessage("❌ Failed to submit review. Please try again.");
+            }
+        } catch (error) {
+            console.error("Error submitting review:", error);
+            setStatusMessage("❌ Error: Could not submit review.");
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -72,27 +114,34 @@ const Reviews: React.FC = () => {
                                 </span>
                             ))}
                         </div>
-                        <button type="submit">Submit</button>
+                        <button type="submit" disabled={isSubmitting}>
+                            {isSubmitting ? "Submitting..." : "Submit"}
+                        </button>
                     </form>
+                    {statusMessage && <p className="status-message">{statusMessage}</p>}
                 </div>
 
-                {/* Display Reviews */}
+                {/* Display Approved Reviews */}
                 <div className="review-list">
                     <h2>What People Say</h2>
-                    <ul>
-                        {reviews.map((review, index) => (
-                            <li key={index} className="review-item">
-                                <p>"{review.message}"</p>
-                                <h3>- {review.name}</h3>
-                                <p>
-                                    <span className="star-display">
-                                        {'★'.repeat(review.rating)}
-                                        {'☆'.repeat(5 - review.rating)}
-                                    </span>
-                                </p>
-                            </li>
-                        ))}
-                    </ul>
+                    {reviews.length > 0 ? (
+                        <ul>
+                            {reviews.map((review) => (
+                                <li key={review.id} className="review-item">
+                                    <p>"{review.message}"</p>
+                                    <h3>- {review.name}</h3>
+                                    <p>
+                                        <span className="star-display">
+                                            {'★'.repeat(review.rating)}
+                                            {'☆'.repeat(5 - review.rating)}
+                                        </span>
+                                    </p>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p>No approved reviews yet. Be the first to leave a review!</p>
+                    )}
                 </div>
             </div>
         </div>

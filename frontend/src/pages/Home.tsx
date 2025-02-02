@@ -7,10 +7,16 @@ const Home: React.FC = () => {
     const handleDownloadCV = (language: string) => {
         const cvUrl =
             language === "English"
-                ? "/cv/Hristo_Ivanov_CV_English.pdf" // Replace with the actual path to the English CV
-                : "/cv/Hristo_Ivanov_CV_French.pdf"; // Replace with the actual path to the French CV
-        window.open(cvUrl, "_blank");
-        setShowCVOptions(false); // Hide the dropdown after selection
+                ? "/cv/Hristo_Ivanov_CV_English.pdf"
+                : "/cv/Hristo_Ivanov_CV_Français.pdf";
+        const link = document.createElement("a");
+        link.href = cvUrl;
+        link.setAttribute("download", cvUrl.split("/").pop() || "CV.pdf");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        setShowCVOptions(false);
     };
 
     const handleLeaveReview = () => {
@@ -42,10 +48,10 @@ const Home: React.FC = () => {
                                 English CV
                             </button>
                             <button
-                                onClick={() => handleDownloadCV("French")}
+                                onClick={() => handleDownloadCV("Français")}
                                 className="dropdown-item"
                             >
-                                French CV
+                                Français CV
                             </button>
                         </div>
                     )}
