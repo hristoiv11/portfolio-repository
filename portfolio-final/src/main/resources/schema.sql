@@ -17,3 +17,25 @@ CREATE TABLE IF NOT EXISTS about (
     description TEXT,
     languages VARCHAR(255)
     );
+
+DROP TABLE IF EXISTS skills;
+CREATE TABLE IF NOT EXISTS skills (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    skillid VARCHAR(36) NOT NULL UNIQUE,
+    languages VARCHAR(255),
+    frameworks VARCHAR(255),
+    tools VARCHAR(255),
+    database_technologies VARCHAR(255),
+    methodologies VARCHAR(255)
+    );
+
+DROP TABLE IF EXISTS reviews;
+CREATE TABLE IF NOT EXISTS reviews (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    rating INT NOT NULL CHECK (rating BETWEEN 1 AND 5),
+    approved BOOLEAN DEFAULT FALSE
+);
+
+

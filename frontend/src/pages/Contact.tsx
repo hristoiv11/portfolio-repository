@@ -2,17 +2,47 @@ import React, { useState } from "react";
 import "../App.css";
 
 const Contact: React.FC = () => {
-    const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+    const [formData, setFormData] = useState({ name: "", email: "", subject: "",message: "" });
+    const [isSending, setIsSending] = useState(false); // ✅ Disable button when sending
+    const [statusMessage, setStatusMessage] = useState<string | null>(null); // ✅ Display status message
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        alert("Message Sent!"); // Replace with your backend logic for sending messages
-        setFormData({ name: "", email: "", message: "" });
+        setIsSending(true);
+        setStatusMessage(null);
+
+        try {
+            const response = await fetch("http://localhost:8080/api/contact/send", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                setStatusMessage("✅ Message sent successfully!");
+                setFormData({ name: "", email: "", subject:"", message: "" }); // Clear form
+
+                // ✅ Hide the message after 5 seconds
+                setTimeout(() => {
+                    setStatusMessage(null);
+                }, 3000);
+
+            } else {
+                setStatusMessage("❌ Failed to send message. Please try again.");
+            }
+        } catch (error) {
+            console.error("Error sending message:", error);
+            setStatusMessage("❌ Error: Could not send the message.");
+        } finally {
+            setIsSending(false);
+        }
     };
 
     const aboutData = {
@@ -48,6 +78,16 @@ const Contact: React.FC = () => {
                     <h1>Contact Me</h1>
                     <form onSubmit={handleSubmit}>
                         <label>
+                            Subject:
+                            <input
+                                type="text"
+                                name="subject"
+                                value={formData.subject}
+                                onChange={handleChange}
+                                required
+                            />
+                        </label>
+                        <label>
                             Name:
                             <input
                                 type="text"
@@ -76,8 +116,11 @@ const Contact: React.FC = () => {
                                 required
                             ></textarea>
                         </label>
-                        <button type="submit">Send</button>
+                        <button type="submit" disabled={isSending}>
+                            {isSending ? "Sending..." : "Send"}
+                        </button>
                     </form>
+                    {statusMessage && <p className="status-message">{statusMessage}</p>} {/* ✅ Show status message */}
                 </div>
             </div>
         </div>
