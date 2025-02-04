@@ -77,11 +77,41 @@ body {
   border-radius: 5px;
   transition: background-color 0.3s ease;
   font-size: 1rem;
+  border: none;
+  cursor: pointer;
 }
 
 .login-button:hover {
   background-color: #0056b3;
 }
+
+.logout-button {
+  padding: 0.5rem 1rem;
+  background-color: #e74c3c;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #c0392b;
+}
+
+.admin-status {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
 
 /* PROJECTS CSS */
 
@@ -103,8 +133,8 @@ body {
 .projects li {
   flex: none;
   width: 100%;
-  max-width: 350px;
-  height: 500px;
+  max-width: 400px;
+  height: 550px;
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 1rem;
@@ -187,6 +217,144 @@ body {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+
+/* ADD Project Form*/
+
+/* FORM CONTAINER */
+.modal {
+  background: black;
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 900px; /* Wider for horizontal layout */
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* FORM LAYOUT */
+.modal form {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns */
+  gap: 1rem 2rem;
+  align-items: center;
+  width: 100%;
+  max-width: 850px;
+}
+
+/* FORM LABELS */
+.modal label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #e2e8f0; /* Light gray text */
+  text-align: left;
+  display: block;
+}
+
+/* INPUT CONTAINER */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* INPUT FIELDS */
+.modal input,
+.modal textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  background: #2d3748;
+  color: white;
+  font-size: 1rem;
+  transition: border-color 0.3s ease-in-out;
+}
+
+/* PLACEHOLDER COLOR */
+.modal input::placeholder,
+.modal textarea::placeholder {
+  color: #94a3b8;
+}
+
+/* FOCUS EFFECT */
+.modal input:focus,
+.modal textarea:focus {
+  border-color: #4299e1;
+  outline: none;
+}
+
+/* TEXTAREA STYLING */
+.modal textarea {
+  resize: vertical;
+  min-height: 40px;
+  max-height: 80px;
+}
+
+/* FORM BUTTONS */
+.form-buttons {
+  grid-column: span 2;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* BUTTON STYLES */
+.btn-close,
+.btn-save {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-close {
+  background-color: #e53e3e; /* Red */
+  color: white;
+}
+
+.btn-close:hover {
+  background-color: #c53030;
+}
+
+.btn-save {
+  background-color: #3182ce; /* Blue */
+  color: white;
+}
+
+.btn-save:hover {
+  background-color: #2b6cb0;
+}
+
+/* CENTER MODAL OVERLAY */
+.modal-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+/* RESPONSIVE FIXES */
+@media (max-width: 768px) {
+  .modal {
+    max-width: 90%;
+  }
+
+  .modal form {
+    grid-template-columns: 1fr;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+  }
+}
+
+
 
 /* HOME PAGE CSS */
 

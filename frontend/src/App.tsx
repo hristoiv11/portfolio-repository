@@ -7,6 +7,7 @@ import Contact from './pages/Contact';
 import Reviews from './pages/Reviews.tsx';
 import Navbar from "./navbar/Navbar.tsx";
 import Login from "./pages/Login.tsx";
+import Logout from "./pages/Logout.tsx";
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/reviews" element={<Reviews />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/logout" element={<Logout />} />
                 {/*<Route path="/reviews" element={<Reviews />} />*/}
             </Routes>
         </Router>
