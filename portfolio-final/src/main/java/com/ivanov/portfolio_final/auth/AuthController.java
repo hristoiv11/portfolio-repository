@@ -1,5 +1,6 @@
 package com.ivanov.portfolio_final.auth;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +12,28 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:5173")
 public class AuthController {
 
+    /*
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequestDTO loginRequest) {
         if ("Hristo".equals(loginRequest.getUsername()) && "pass1234pass".equals(loginRequest.getPassword())) {
-            String token = "mocked-jwt-token"; // Replace with real JWT generation
+            String token = "mocked-jwt-token";
+            return ResponseEntity.ok(Map.of("token", token));
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+    }
+
+     */
+
+    @Value("${ADMIN_USERNAME}")
+    private String adminUsername;
+
+    @Value("${ADMIN_PASSWORD}")
+    private String adminPassword;
+
+    @PostMapping("/login")
+    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequestDTO loginRequest) {
+        if (adminUsername.equals(loginRequest.getUsername()) && adminPassword.equals(loginRequest.getPassword())) {
+            String token = "mocked-jwt-token";
             return ResponseEntity.ok(Map.of("token", token));
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
