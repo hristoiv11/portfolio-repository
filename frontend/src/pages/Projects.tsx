@@ -218,6 +218,18 @@ const Projects: React.FC = () => {
                             >
                                 GitHub
                             </a>
+
+                            {project.name === "Client Management and Billing System" && (
+                                <a
+                                    href="http://app.compteexpress.com/login"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="btn btn-external"
+                                >
+                                    Deployment
+                                </a>
+                            )}
+
                             {isAdmin && (
                                 <>
                                     <button className="btn-update" onClick={() => handleUpdateClick(project)}>
