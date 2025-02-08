@@ -1,0 +1,126 @@
+{
+  "navbar": {
+    "home": "Accueil",
+    "about": "À propos",
+    "projects": "Projets",
+    "skills": "Compétences",
+    "contact": "Contact",
+    "reviews": "Avis",
+    "login": "Connexion",
+    "logout": "Déconnexion"
+  },
+
+  "home": {
+    "title": "Bienvenue sur Mon Portfolio",
+    "description": "Salut, je suis Hristo, un développeur logiciel passionné, dédié à la création d'applications innovantes qui résolvent des problèmes réels.",
+    "downloadCV": "Télécharger le CV",
+    "cvEnglish": "CV en Anglais",
+    "cvFrench": "CV en Français",
+    "leaveReview": "Laisser un Avis"
+  },
+
+  "about": {
+    "title": "À propos de moi",
+    "description": "Je suis un jeune programmeur motivé et créatif, ayant des objectifs élevés pour faire avancer la technologie. Je suis passionné par le développement de solutions innovantes qui résolvent des problèmes réels grâce à la technologie. Je suis reconnu pour mon souci du détail, mes compétences en communication et mon esprit d'équipe. Je m'efforce toujours d'accomplir les tâches avec précision et je suis impatient de contribuer à de nouveaux projets intéressants qui repoussent les limites technologiques.",
+    "languagesTitle": "Langues",
+    "languagesNames": {
+      "English": "Anglais",
+      "French": "Français",
+      "Bulgarian": "Bulgare"
+    }
+  },
+
+  "projects": {
+    "title": "Projets",
+    "addNewProject": "Ajouter un Nouveau Projet",
+    "viewDetails": "Voir les Détails",
+    "github": "GitHub",
+    "deployment": "Déploiement",
+    "update": "Mettre à Jour",
+    "delete": "Supprimer",
+    "createProject": "Créer un Nouveau Projet",
+    "updateProject": "Mettre à Jour le Projet",
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer ce projet ?",
+    "deleteSuccess": "Projet supprimé avec succès !",
+    "fields": {
+      "name": "Nom",
+      "description": "Description",
+      "technologies": "Technologies",
+      "githubLink": "Lien GitHub",
+      "uploadImage": "Télécharger une Image"
+    },
+    "buttons": {
+      "save": "Enregistrer",
+      "cancel": "Annuler",
+      "yesDelete": "Oui, Supprimer"
+    },
+    "projectNames": {
+      "clientBilling": "Système de Gestion des Clients et Facturation",
+      "petClinic": "Clinique pour Animaux",
+      "sneakerEcommerceWS": "E-Commerce de Sneakers avec Services Web",
+      "sneakerEcommerce": "E-Commerce de Sneakers",
+      "shootingGame": "Jeu de Tir 2D",
+      "resumeBuilder": "Application de Création de CV"
+    }
+  },
+
+  "skills": {
+    "title": "Compétences",
+    "categories": {
+      "languages": "Langages de Programmation",
+      "frameworks": "Frameworks & Bibliothèques",
+      "tools": "Outils & Technologies",
+      "databases": "Bases de Données",
+      "methodologies": "Méthodologies"
+    }
+  },
+
+  "contact": {
+    "title": "Me Contacter",
+    "infoTitle": "Informations de Contact",
+    "email": "E-mail",
+    "linkedin": "LinkedIn",
+    "form": {
+      "name": "Nom",
+      "email": "E-mail",
+      "subject": "Sujet",
+      "message": "Message",
+      "send": "Envoyer",
+      "sending": "Envoi en cours..."
+    },
+    "statusMessages": {
+      "success": "✅ Message envoyé avec succès !",
+      "error": "❌ Erreur : Impossible d'envoyer le message.",
+      "failure": "❌ Échec de l'envoi du message. Veuillez réessayer."
+    }
+  },
+
+  "reviews": {
+    "title": "Avis",
+    "leaveReview": "Laisser un Avis",
+    "submitReview": "Soumettre",
+    "submitting": "Envoi en cours...",
+    "reviewListTitle": "Ce que les gens disent",
+    "rating": "Évaluation",
+    "name": "Nom",
+    "message": "Message",
+    "namePlaceholder": "Entrez votre nom",
+    "messagePlaceholder": "Entrez votre message",
+    "noReviews": "Aucun avis approuvé pour le moment. Soyez le premier à laisser un avis !",
+    "statusMessages": {
+      "success": "✅ Avis soumis avec succès !",
+      "error": "❌ Erreur : Impossible de soumettre l'avis.",
+      "failure": "❌ Échec de la soumission de l'avis. Veuillez réessayer.",
+      "emptyFields": "❌ Veuillez remplir tous les champs et sélectionner une note."
+    },
+    "admin": {
+      "deleteReview": "Supprimer",
+      "confirmDelete": "Êtes-vous sûr de vouloir supprimer cet avis ?",
+      "deleteSuccess": "Avis supprimé avec succès !",
+      "buttons": {
+        "yesDelete": "Oui, Supprimer",
+        "cancel": "Annuler"
+      }
+    }
+  }
+}

@@ -48,10 +48,10 @@ const Home: React.FC = () => {
                                 English CV
                             </button>
                             <button
-                                onClick={() => handleDownloadCV("Français")}
+                                onClick={() => handleDownloadCV("French")}
                                 className="dropdown-item"
                             >
-                                Français CV
+                                French CV
                             </button>
                         </div>
                     )}
