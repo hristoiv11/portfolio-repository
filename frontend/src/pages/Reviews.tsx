@@ -15,9 +15,17 @@ const Reviews: React.FC = () => {
     const [rating, setRating] = useState<number>(0);
     const [statusMessage, setStatusMessage] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isAdmin, setIsAdmin] = useState<boolean>(false);
+    const [deleteReviewId, setDeleteReviewId] = useState<number | null>(null);
+    const [showDeleteSuccess, setShowDeleteSuccess] = useState<boolean>(false);
+
 
     // ✅ Function to fetch approved reviews
     const fetchReviews = async () => {
+
+        const token = localStorage.getItem("adminToken");
+        setIsAdmin(!!token); // Admin if token exists
+
         try {
             const response = await fetch("http://localhost:8080/api/reviews/approved");
             if (!response.ok) throw new Error("Failed to fetch reviews");
@@ -76,6 +84,57 @@ const Reviews: React.FC = () => {
             setIsSubmitting(false);
         }
     };
+
+    const handleDeleteClick = (reviewId: number) => {
+        setDeleteReviewId(reviewId);
+        setShowDeleteSuccess(false); // Reset success message
+    };
+
+    const handleDeleteReview = async (reviewId: number) => {
+        if (!isAdmin) return;
+
+        try {
+            const response = await fetch(`http://localhost:8080/api/reviews/${reviewId}`, {
+                method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("adminToken")}`,
+                },
+            });
+
+            if (response.ok) {
+                setReviews((prevReviews) => prevReviews.filter((review) => review.id !== reviewId));
+            }
+        } catch (error) {
+            console.error("Error deleting review:", error);
+        }
+    };
+
+    const confirmDeleteReview = async () => {
+        if (!deleteReviewId) return;
+
+        try {
+            const response = await fetch(`http://localhost:8080/api/reviews/${deleteReviewId}`, {
+                method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("adminToken")}`,
+                },
+            });
+
+            if (response.ok) {
+                setReviews((prevReviews) => prevReviews.filter((review) => review.id !== deleteReviewId));
+                setShowDeleteSuccess(true); // Show success message
+                setTimeout(() => {
+                    setShowDeleteSuccess(false);
+                    setDeleteReviewId(null); // Close modal
+                }, 2000); // Auto-hide after 2 seconds
+            }
+        } catch (error) {
+            console.error("Error deleting review:", error);
+        }
+    };
+
+
+
 
     return (
         <div className="reviews-page">
@@ -136,11 +195,41 @@ const Reviews: React.FC = () => {
                                             {'☆'.repeat(5 - review.rating)}
                                         </span>
                                     </p>
+
+                                    {isAdmin && (
+                                        <button
+                                            className="btn-delete"
+                                            onClick={() => handleDeleteClick(review.id)}
+                                        >
+                                            Delete
+                                        </button>
+                                    )}
                                 </li>
                             ))}
                         </ul>
                     ) : (
                         <p>No approved reviews yet. Be the first to leave a review!</p>
+                    )}
+
+                    {deleteReviewId !== null && (
+                        <div className="review-modal-overlay">
+                            <div className="review-modal">
+                                {!showDeleteSuccess ? (
+                                    <>
+                                        <h2>Confirm Deletion</h2>
+                                        <p>Are you sure you want to delete this review?</p>
+                                        <button className="review-btn-delete" onClick={confirmDeleteReview}>
+                                            Yes, Delete
+                                        </button>
+                                        <button className="review-btn-cancel" onClick={() => setDeleteReviewId(null)}>
+                                            Cancel
+                                        </button>
+                                    </>
+                                ) : (
+                                    <h2>Review deleted successfully!</h2>
+                                )}
+                            </div>
+                        </div>
                     )}
                 </div>
             </div>
