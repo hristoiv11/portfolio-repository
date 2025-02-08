@@ -534,6 +534,9 @@ body {
   padding: 1.5rem;
   text-align: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 250px;
 }
 
 .skill-category:hover {
@@ -587,6 +590,35 @@ body {
   .skill-category ul {
     grid-template-columns: 1fr;
   }
+}
+
+.btn-add {
+  position: relative;
+  top: -20px; /* Move it upwards */
+  margin-bottom: 10px; /* Add some spacing */
+}
+
+.btn-delete {
+  min-width: 80px; /* Ensures uniform size */
+  text-align: center;
+}
+
+.skill-buttons-container {
+  margin-top: auto; /* Pushes buttons to the bottom */
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Space between buttons */
+  padding-top: 10px; /* Adds spacing between text and buttons */
+}
+
+.modal select {
+  width: 90%;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background: #2d3748;
+  color: white;
 }
 
 /* CONTACT PAGE CSS */
@@ -907,3 +939,94 @@ button:hover {
   font-size: 1.5rem;
   color: #ffc107;
 }
+
+.btn-delete {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.btn-delete:hover {
+  background-color: darkred;
+}
+
+/* CONFIRM DELETE MODAL FOR REVIEWS */
+.review-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.review-modal {
+  background: #1e293b;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.review-modal h2 {
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+.review-modal p {
+  color: #e2e8f0;
+}
+
+/* DELETE & CANCEL BUTTONS FOR REVIEWS */
+.review-btn-delete {
+  background-color: #e74c3c;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.review-btn-delete:hover {
+  background-color: #c0392b;
+}
+
+.review-btn-cancel {
+  background-color: #6c757d;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.review-btn-cancel:hover {
+  background-color: #5a6268;
+}
+
+/* RESPONSIVE STYLING FOR REVIEWS */
+@media (max-width: 768px) {
+  .review-container {
+    flex-direction: column;
+  }
+
+  .review-form,
+  .review-list {
+    max-width: 100%;
+  }
+}
+

@@ -47,7 +47,6 @@ const Contact: React.FC = () => {
 
     const aboutData = {
         email: "hristogr85@gmail.com",
-        phone: "514-965-4697",
         linkedin: "https://www.linkedin.com/in/hristo-ivanov-a65245327/",
     };
 
@@ -59,7 +58,6 @@ const Contact: React.FC = () => {
                     <h1>Contact Info</h1>
                     <div className="contact-info">
                         <p>Email: {aboutData.email}</p>
-                        <p>Phone: {aboutData.phone}</p>
                         <p>
                             LinkedIn:{" "}
                             <a
