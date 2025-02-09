@@ -1,5 +1,6 @@
 package com.ivanov.portfolio_final.about.businesslayer;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ivanov.portfolio_final.about.dataaccesslayer.About;
 import com.ivanov.portfolio_final.about.dataaccesslayer.AboutRepository;
 import com.ivanov.portfolio_final.about.presentationlayer.AboutRequestDTO;
@@ -10,9 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class AboutServiceImpl implements AboutService{
@@ -111,6 +110,43 @@ public class AboutServiceImpl implements AboutService{
 
         }
     }
+
+    @Override
+    public void deleteLanguage(String aboutId, String languageName) {
+        About foundAbout = aboutRepository.findAboutByAboutId(aboutId);
+
+        if (foundAbout == null) {
+            throw new NotFoundException("Unknown aboutId: " + aboutId);
+        }
+
+        ObjectMapper objectMapper = new ObjectMapper(); // Jackson ObjectMapper
+
+        try {
+            // Convert flags JSON string to a Map
+            Map<String, String> flags = objectMapper.readValue(foundAbout.getFlags(), Map.class);
+
+            if (flags == null || !flags.containsKey(languageName)) {
+                throw new NotFoundException("Language not found: " + languageName);
+            }
+
+            // Remove the language from the flags map
+            flags.remove(languageName);
+
+            // Update the languages field (Convert to List, remove, and join back to a string)
+            List<String> languagesList = new ArrayList<>(Arrays.asList(foundAbout.getLanguages().split(", ")));
+            languagesList.remove(languageName);
+
+            // Convert updated flags back to JSON and update languages string
+            foundAbout.setFlags(objectMapper.writeValueAsString(flags));
+            foundAbout.setLanguages(String.join(", ", languagesList)); // ✅ Update languages list
+
+            aboutRepository.save(foundAbout);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error processing JSON", e);
+        }
+    }
+
 
     @Override
     public About getAboutImageByAboutID(String aboutId) {

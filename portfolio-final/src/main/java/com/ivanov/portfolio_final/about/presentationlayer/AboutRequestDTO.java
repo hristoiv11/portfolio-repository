@@ -10,4 +10,5 @@ public class AboutRequestDTO {
     private String image;
     private String description;
     private String languages;
+    private String flags;
 }
