@@ -25,4 +25,7 @@ public class About {
 
     @Column(name = "languages")
     private String languages;
+
+    @Column(name = "flags")
+    private String flags;
 }

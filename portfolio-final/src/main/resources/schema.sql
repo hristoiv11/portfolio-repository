@@ -15,7 +15,8 @@ CREATE TABLE IF NOT EXISTS about (
     aboutid VARCHAR(36) NOT NULL UNIQUE,
     image LONGBLOB,
     description TEXT,
-    languages VARCHAR(255)
+    languages VARCHAR(255),
+    flags TEXT
     );
 
 DROP TABLE IF EXISTS skills;

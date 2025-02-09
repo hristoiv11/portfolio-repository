@@ -21,5 +21,7 @@ public interface AboutService {
 
     void deleteAbout(String aboutId);
 
+    void deleteLanguage(String aboutId, String languageName);
+
     About getAboutImageByAboutID(String aboutId);
 }

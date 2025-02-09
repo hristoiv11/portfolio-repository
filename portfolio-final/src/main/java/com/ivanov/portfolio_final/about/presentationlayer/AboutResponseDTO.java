@@ -12,4 +12,5 @@ public class AboutResponseDTO {
     private String image;
     private String description;
     private String languages;
+    private String flags;
 }

@@ -65,6 +65,13 @@ public class AboutController {
 
     }
 
+    @DeleteMapping("/{aboutId}/languages/{languageName}")
+    public ResponseEntity<Void> deleteLanguage(@PathVariable String aboutId, @PathVariable String languageName) {
+        aboutService.deleteLanguage(aboutId, languageName);
+        return ResponseEntity.noContent().build(); // 204 No Content if deleted successfully
+    }
+
+
     @GetMapping("/{aboutId}/image")
     public ResponseEntity<byte[]> getImage(@PathVariable String aboutId) {
         About about = aboutService.getAboutImageByAboutID(aboutId); // Using the service layer for better encapsulation

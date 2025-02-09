@@ -487,6 +487,7 @@ body {
 }
 
 .language-item {
+  position: relative;
   text-align: center;
   font-size: 1.25rem;
   font-weight: bold;
@@ -500,6 +501,43 @@ body {
   margin-bottom: 0.5rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   object-fit: cover;
+}
+
+/* DELETE BUTTON */
+.delete-btn {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: 0.2s ease-in-out;
+}
+
+.delete-btn:hover {
+  background-color: darkred;
+}
+
+/* Move the Update button down */
+.oval-container .btn-update {
+  position: relative;
+  top: 15px; /* Adjust the value as needed */
+}
+
+/* Move the Add Language button down */
+.language-buttons {
+  position: relative;
+  top: 30px; /* Adjust the value as needed */
 }
 
 
