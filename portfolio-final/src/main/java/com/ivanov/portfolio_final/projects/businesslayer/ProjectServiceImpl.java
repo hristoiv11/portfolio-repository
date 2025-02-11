@@ -42,6 +42,7 @@ public class ProjectServiceImpl implements ProjectService{
         return projectResponseDTOList;
     }
 
+    /*
     @Override
     public ProjectResponseDTO getProjectByProjectID(String projectId) {
 
@@ -55,6 +56,28 @@ public class ProjectServiceImpl implements ProjectService{
         BeanUtils.copyProperties(project,projectResponseDTO);
         return projectResponseDTO;
     }
+
+     */
+
+    @Override
+    public ProjectResponseDTO getProjectByProjectID(String projectId) {
+        Project project = projectRepository.findProjectByProjectId(projectId);
+
+        if (project == null) {
+            throw new NotFoundException("Unknown projectId: " + projectId);
+        }
+
+        return new ProjectResponseDTO(
+                project.getProjectId(),
+                project.getName(),
+                project.getDescriptionEn(),
+                project.getDescriptionFr(),
+                project.getTechnologies(),
+                project.getLink(),
+                project.getImage()
+        );
+    }
+
 
     @Override
     public ProjectResponseDTO addProject(ProjectRequestDTO projectRequestDTO) {
@@ -71,6 +94,7 @@ public class ProjectServiceImpl implements ProjectService{
         return projectResponseDTO;
     }
 
+    /*
     @Override
     public ProjectResponseDTO updateProject(ProjectRequestDTO projectRequestDTO, String projectId) {
 
@@ -93,6 +117,50 @@ public class ProjectServiceImpl implements ProjectService{
 
         return projectResponseDTO;
     }
+
+     */
+
+    @Override
+    public ProjectResponseDTO updateProject(ProjectRequestDTO projectRequestDTO, String projectId) {
+        Project foundProject = projectRepository.findProjectByProjectId(projectId);
+
+        if (foundProject == null) {
+            throw new NotFoundException("Unknown projectId: " + projectId);
+        }
+
+        // Update fields only if they are provided
+        if (projectRequestDTO.getName() != null) {
+            foundProject.setName(projectRequestDTO.getName());
+        }
+        if (projectRequestDTO.getDescriptionEn() != null) {
+            foundProject.setDescriptionEn(projectRequestDTO.getDescriptionEn());
+        }
+        if (projectRequestDTO.getDescriptionFr() != null) {
+            foundProject.setDescriptionFr(projectRequestDTO.getDescriptionFr());
+        }
+        if (projectRequestDTO.getTechnologies() != null) {
+            foundProject.setTechnologies(projectRequestDTO.getTechnologies());
+        }
+        if (projectRequestDTO.getLink() != null) {
+            foundProject.setLink(projectRequestDTO.getLink());
+        }
+        if (projectRequestDTO.getImage() != null) {
+            foundProject.setImage(projectRequestDTO.getImage());
+        }
+
+        Project savedProject = projectRepository.save(foundProject);
+
+        return new ProjectResponseDTO(
+                savedProject.getProjectId(),
+                savedProject.getName(),
+                savedProject.getDescriptionEn(),
+                savedProject.getDescriptionFr(),
+                savedProject.getTechnologies(),
+                savedProject.getLink(),
+                savedProject.getImage()
+        );
+    }
+
 
     @Override
     public void deleteProject(String projectId) {

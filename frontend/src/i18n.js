@@ -1,30 +1,23 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import en from "./locales/en.json";
-import fr from "./locales/fr.json";
+import HttpBackend from "i18next-http-backend";
+import LanguageDetector from "i18next-browser-languagedetector";
 
 i18n
-    .use(initReactI18next)
+    .use(HttpBackend) // Loads translations from backend
+    .use(LanguageDetector) // Detects user language
+    .use(initReactI18next) // Initializes react-i18next
     .init({
-        resources: {
-            en: { translation: en },
-            fr: { translation: fr },
-        },
-        lng: localStorage.getItem("language") || "en", // Load saved language
+        lng: localStorage.getItem("i18nextLng") || "en", // Default language
         fallbackLng: "en",
-        debug: true,  // Enable debug mode to see errors
+        debug: true,
+        backend: {
+            loadPath: "http://localhost:8080/api/translations?lang={{lng}}", // Fetch from backend
+        },
         interpolation: { escapeValue: false },
     })
-    .then(() => {
-        console.log("✅ i18n initialized successfully");
-    })
-    .catch((error) => {
-        console.error("❌ Error initializing i18n:", error);
-    });
-
-// Save language selection
-i18n.on("languageChanged", (lng) => {
-    localStorage.setItem("language", lng);
-});
+    .then(() => console.log("✅ i18n initialized successfully")) // ✅ Handle Promise
+    .catch((err) => console.error("❌ i18n initialization failed", err)); // ✅ Handle errors
 
 export default i18n;
+

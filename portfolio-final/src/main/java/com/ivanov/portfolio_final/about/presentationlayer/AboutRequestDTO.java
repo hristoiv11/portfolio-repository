@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 public class AboutRequestDTO {
 
     private String image;
-    private String description;
+    private String descriptionEn;
+    private String descriptionFr;
     private String languages;
     private String flags;
 }

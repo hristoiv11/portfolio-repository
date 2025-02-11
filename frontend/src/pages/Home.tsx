@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import "../App.css";
+import {useTranslation} from "react-i18next";
 
 const Home: React.FC = () => {
+    const { t } = useTranslation();
     const [showCVOptions, setShowCVOptions] = useState<boolean>(false);
 
     const handleDownloadCV = (language: string) => {
@@ -25,10 +27,8 @@ const Home: React.FC = () => {
 
     return (
         <div className="home">
-            <h1>Welcome to My Portfolio</h1>
-            <p>
-                Hi, I'm Hristo, a passionate software developer dedicated to crafting innovative applications that solve real-world problems.
-            </p>
+            <h1>{t("title")}</h1>
+            <p>{t("description")}</p>
 
             <div className="button-group">
                 {/* Download CV Button */}
@@ -37,7 +37,7 @@ const Home: React.FC = () => {
                         onClick={() => setShowCVOptions(!showCVOptions)}
                         className="btn"
                     >
-                        Download CV
+                        {t("downloadCV")}
                     </button>
                     {showCVOptions && (
                         <div className="dropdown-menu">
@@ -45,20 +45,20 @@ const Home: React.FC = () => {
                                 onClick={() => handleDownloadCV("English")}
                                 className="dropdown-item"
                             >
-                                English CV
+                                {t("cvEnglish")}
                             </button>
                             <button
                                 onClick={() => handleDownloadCV("French")}
                                 className="dropdown-item"
                             >
-                                French CV
+                                {t("cvFrench")}
                             </button>
                         </div>
                     )}
                 </div>
 
                 <button onClick={handleLeaveReview} className="btn">
-                    Leave a Review
+                    {t("leaveReview")}
                 </button>
             </div>
         </div>

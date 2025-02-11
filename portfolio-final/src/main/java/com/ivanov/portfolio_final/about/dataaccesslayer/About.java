@@ -20,8 +20,11 @@ public class About {
     @Column(name = "image")
     private String image;
 
-    @Column(name = "description")
-    private String description;
+    @Column(name = "description_en", columnDefinition = "TEXT")
+    private String descriptionEn;
+
+    @Column(name = "description_fr", columnDefinition = "TEXT")
+    private String descriptionFr;
 
     @Column(name = "languages")
     private String languages;

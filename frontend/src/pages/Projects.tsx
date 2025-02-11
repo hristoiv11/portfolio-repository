@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 //import '../css/Projects.css';
 import "../App.css";
+import i18n from "../i18n";
+import {useTranslation} from "react-i18next";
 interface Project {
     id: number | null;
     projectId: string;
@@ -13,6 +15,7 @@ interface Project {
 }
 
 const Projects: React.FC = () => {
+    const { t } = useTranslation();
     const [projects, setProjects] = useState<Project[]>([]);
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
@@ -30,6 +33,7 @@ const Projects: React.FC = () => {
     });
     const navigate = useNavigate();
 
+    /*
     useEffect(() => {
 
         const token = localStorage.getItem("adminToken");
@@ -49,6 +53,30 @@ const Projects: React.FC = () => {
                 console.error("Error fetching projects:", error)
             );
     }, []);
+
+     */
+
+    useEffect(() => {
+        const lang = i18n.language; // ✅ Get the current language dynamically
+
+        const token = localStorage.getItem("adminToken");
+        setIsAdmin(!!token); // ✅ True if token exists
+
+        fetch(`http://localhost:8080/api/projects?lang=${lang}`) // ✅ Fetch projects based on language
+            .then((response) => response.json())
+            .then((data) => {
+                const processedData = data.map((project: Project, index: number) => ({
+                    ...project,
+                    id: project.id ?? index, // ✅ Use index as fallback if `id` is missing
+                    description: lang === "fr" ? project.descriptionFr : project.descriptionEn // ✅ Select the correct description
+                }));
+                setProjects(processedData);
+            })
+            .catch((error) => {
+                console.error(t("fetchProjectsError"), error);
+            });
+    }, [i18n.language]); // ✅ Re-fetch when the language changes
+
 
     const handleViewDetails = (project: Project) => {
         setSelectedProject(project);
@@ -83,7 +111,7 @@ const Projects: React.FC = () => {
                 }, 2000); // Auto-hide after 2 seconds
             }
         } catch (error) {
-            console.error("Error deleting project:", error);
+            console.error(t("deleteProjectFailure"), error);
         }
     };
 
@@ -158,6 +186,7 @@ const Projects: React.FC = () => {
         }
     };
 
+    /*
     const handleUpdateProjectSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!updateProject) return;
@@ -183,14 +212,67 @@ const Projects: React.FC = () => {
         }
     };
 
+     */
+
+    const handleUpdateProjectSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!updateProject) return;
+
+        const lang = i18n.language; // ✅ Get the current language dynamically
+
+        // ✅ Keep the existing image if not changed
+        const updateData = {
+            image: updateProject.image,
+            descriptionEn: lang === "en" ? updateProject.description : updateProject.descriptionEn, // ✅ Update only English if selected
+            descriptionFr: lang === "fr" ? updateProject.description : updateProject.descriptionFr, // ✅ Update only French if selected
+            name: updateProject.name,
+            technologies: updateProject.technologies,
+            link: updateProject.link,
+        };
+
+        try {
+            const response = await fetch(`http://localhost:8080/api/projects/${updateProject.projectId}?lang=${lang}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("adminToken")}`,
+                },
+                body: JSON.stringify(updateData),
+            });
+
+            if (!response.ok) {
+                throw new Error(`${t("httpError").replace("{status}", response.status.toString())}`);
+            }
+
+            const updatedProject = await response.json();
+
+            setProjects((prevProjects) =>
+                prevProjects.map((p) => (p.projectId === updateProject.projectId ? {
+                    ...p,
+                    image: updatedProject.image,
+                    description: lang === "fr" ? updatedProject.descriptionFr : updatedProject.descriptionEn, // ✅ Keep updated text
+                    name: updatedProject.name,
+                    technologies: updatedProject.technologies,
+                    link: updatedProject.link,
+                } : p))
+            );
+
+            setShowUpdateProjectModal(false);
+            console.log(t("updateSuccess")); // ✅ Log success message
+        } catch (error) {
+            console.error(t("updateFailure"), error);
+        }
+    };
+
+
     return (
         <div className="projects">
-            <h1>Projects</h1>
+            <h1>{t("projectsTitle")}</h1>
 
 
             {isAdmin && (
                 <button className="btn-add" onClick={handleAddProjectClick}>
-                    Add New Project
+                    {t("addNewProject")}
                 </button>
             )}
 
@@ -208,7 +290,7 @@ const Projects: React.FC = () => {
                                 className="btn"
                                 onClick={() => handleViewDetails(project)}
                             >
-                                View Details
+                                {t("viewDetails")}
                             </button>
                             <a
                                 href={project.link}
@@ -216,7 +298,7 @@ const Projects: React.FC = () => {
                                 rel="noopener noreferrer"
                                 className="btn"
                             >
-                                GitHub
+                                {t("githubProject")}
                             </a>
 
                             {project.name === "Client Management and Billing System" && (
@@ -226,17 +308,17 @@ const Projects: React.FC = () => {
                                     rel="noopener noreferrer"
                                     className="btn btn-external"
                                 >
-                                    Deployment
+                                    {t("deploymentProject")}
                                 </a>
                             )}
 
                             {isAdmin && (
                                 <>
                                     <button className="btn-update" onClick={() => handleUpdateClick(project)}>
-                                        Update
+                                        {t("updateProject")}
                                     </button>
                                     <button className="btn-delete" onClick={() => handleDeleteClick(project.projectId)}>
-                                        Delete
+                                        {t("deleteProject")}
                                     </button>
                                 </>
                             )}
@@ -248,38 +330,38 @@ const Projects: React.FC = () => {
             {showAddProjectModal && (
                 <div className="modal-overlay">
                     <div className="modal">
-                        <h2>Create New Project</h2>
+                        <h2>{t("createProjectTitle")}</h2>
                         <form onSubmit={handleAddProjectSubmit}>
                             <div className="form-group">
-                                <label>Name</label>
+                                <label>{t("projectName")}</label>
                                 <input type="text" name="name" value={newProject.name} onChange={handleInputChange} required />
                             </div>
 
                             <div className="form-group">
-                                <label>Description</label>
+                                <label>{t("projectDescription")}</label>
                                 <textarea name="description" value={newProject.description} onChange={handleInputChange} required />
                             </div>
 
                             <div className="form-group">
-                                <label>Technologies</label>
+                                <label>{t("projectTechnologies")}</label>
                                 <input type="text" name="technologies" value={newProject.technologies} onChange={handleInputChange} required />
                             </div>
 
                             <div className="form-group">
-                                <label>GitHub Link</label>
+                                <label>{t("projectGithubLink")}</label>
                                 <input type="text" name="link" value={newProject.link} onChange={handleInputChange} required />
                             </div>
 
                             <div className="form-group">
-                                <label>Upload Image</label>
+                                <label>{t("projectUploadImage")}</label>
                                 <input type="file" accept="image/*" onChange={handleImageUpload} />
                             </div>
 
                             <div className="form-buttons">
                                 <button type="button" className="btn-close" onClick={handleCloseAddProjectModal}>
-                                    Cancel
+                                    {t("cancelProject")}
                                 </button>
-                                <button type="submit" className="btn-save">Save</button>
+                                <button type="submit" className="btn-save">{t("saveProject")}</button>
                             </div>
                         </form>
                     </div>
@@ -289,39 +371,39 @@ const Projects: React.FC = () => {
             {showUpdateProjectModal && updateProject && (
                 <div className="modal-overlay">
                     <div className="modal">
-                        <h2>Update Project</h2>
+                        <h2>{t("updateProjectTitle")}</h2>
                         <form onSubmit={handleUpdateProjectSubmit}>
 
                             <div className="form-group">
-                                <label>Name</label>
+                                <label>{t("projectName")}</label>
                                 <input type="text" name="name" value={updateProject.name} onChange={handleInputChange} required />
                             </div>
 
                             <div className="form-group">
-                                <label>Description</label>
+                                <label>{t("projectDescription")}</label>
                                 <textarea name="description" value={updateProject.description} onChange={handleInputChange} required />
                             </div>
 
                             <div className="form-group">
-                                <label>Technologies</label>
+                                <label>{t("projectTechnologies")}</label>
                                 <input type="text" name="technologies" value={updateProject.technologies} onChange={handleInputChange} required />
                             </div>
 
                             <div className="form-group">
-                                <label>GitHub Link</label>
+                                <label>{t("projectGithubLink")}</label>
                                 <input type="text" name="link" value={updateProject.link} onChange={handleInputChange} required />
                             </div>
 
                             <div className="form-group">
-                                <label>Upload Image</label>
+                                <label>{t("projectUploadImage")}</label>
                                 <input type="file" accept="image/*" onChange={handleImageUpload} />
                             </div>
 
                             <div className="form-buttons">
                                 <button type="button" className="btn-close" onClick={handleCloseUpdateProjectModal}>
-                                    Cancel
+                                    {t("cancelProject")}
                                 </button>
-                                <button type="submit" className="btn-save">Update</button>
+                                <button type="submit" className="btn-save">{t("updateProject")}</button>
                             </div>
                         </form>
                     </div>
@@ -334,16 +416,16 @@ const Projects: React.FC = () => {
                     <div className="modal">
                         <h2>{selectedProject.name}</h2>
                         <p>
-                            <strong>Description:</strong> {selectedProject.description}
+                            <strong>{t("projectDescription")}:</strong> {selectedProject.description}
                         </p>
                         <p>
-                            <strong>Technologies:</strong> {selectedProject.technologies}
+                            <strong>{t("projectTechnologies")}:</strong> {selectedProject.technologies}
                         </p>
                         <button
                             className="btn-close"
                             onClick={handleCloseModal}
                         >
-                            Close
+                            {t("close")}
                         </button>
                     </div>
                 </div>
@@ -354,17 +436,17 @@ const Projects: React.FC = () => {
                     <div className="modal">
                         {!showDeleteSuccess ? (
                             <>
-                                <h2>Confirm Deletion</h2>
-                                <p>Are you sure you want to delete this project?</p>
+                                <h2>{t("confirmDeleteTitleProject")}</h2>
+                                <p>{t("confirmDeleteProject")}</p>
                                 <button className="btn-save" onClick={confirmDeleteProject}>
-                                    Yes, Delete
+                                    {t("yesDeleteProject")}
                                 </button>
                                 <button className="btn-close" onClick={() => setDeleteProjectId(null)}>
-                                    Cancel
+                                    {t("cancelProject")}
                                 </button>
                             </>
                         ) : (
-                            <h2>Project deleted successfully!</h2>
+                            <h2>{t("deleteProjectSuccess")}</h2>
                         )}
                     </div>
                 </div>

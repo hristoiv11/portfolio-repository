@@ -1,3 +1,8 @@
+{/*for responsivness*/}
+* {
+  box-sizing: border-box;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -10,6 +15,8 @@ body {
   color: white;
   margin: 0;
   font-family: Arial, sans-serif;
+{/*for responsivness*/}
+  overflow-x: hidden;
 }
 
 /* NAVBAR CSS */
@@ -112,6 +119,70 @@ body {
   font-size: 14px;
 }
 
+.language-switcher {
+  margin-right: 1rem; /* Add space between language switcher and login button */
+}
+
+.language-toggle {
+  background-color: #007bff;
+  border: none;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 5px 10px;
+  color: white;
+}
+
+.language-toggle:hover {
+  background-color: #0056b3;
+}
+
+{/*for responsivness*/}
+/* NAVBAR RESPONSIVENESS */
+@media (max-width: 1024px) {
+  .navbar {
+    flex-direction: column;
+    padding: 0.5rem;
+  }
+
+  .navbar ul {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .navbar-center {
+    margin-right: 0;
+    text-align: center;
+    flex-grow: unset;
+  }
+
+  .navbar-login {
+    margin: 0;
+  }
+
+  .navbar ul {
+    width: 100%;
+    justify-content: center;
+  }
+}
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem;
+  }
+
+  .navbar ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .navbar a {
+    display: block;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+  }
+}
 
 /* PROJECTS CSS */
 
@@ -134,7 +205,8 @@ body {
   flex: none;
   width: 100%;
   max-width: 400px;
-  height: 550px;
+{/*height: 550px;*/}
+  height: 610px;
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 1rem;
@@ -232,6 +304,24 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+{/*for responsivness*/}
+/* MODAL RESPONSIVENESS */
+@media (max-width: 768px) {
+  .modal {
+    max-width: 95%;
+    padding: 1.5rem;
+  }
+
+  .modal form {
+    grid-template-columns: 1fr;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 }
 
 /* FORM LAYOUT */
@@ -353,6 +443,37 @@ body {
     flex-direction: column;
   }
 }
+
+{/*for responsivness*/}
+@media (max-width: 1024px) {
+  .projects ul {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .projects li {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .projects img {
+    height: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .projects ul {
+    grid-template-columns: 1fr;
+  }
+
+  .projects li {
+    height: auto;
+  }
+
+  .projects img {
+    height: 180px;
+  }
+}
+
 
 
 
@@ -540,6 +661,21 @@ body {
   top: 30px; /* Adjust the value as needed */
 }
 
+/* ABOUT PAGE RESPONSIVENESS */
+@media (max-width: 1024px) {
+  .oval-container,
+  .languages-container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .oval-container,
+  .languages-container {
+    width: 95%;
+    padding: 1.5rem;
+  }
+}
 
 /*SKILLS PAGE CSS */
 
@@ -657,6 +793,17 @@ body {
   border: 1px solid #ccc;
   background: #2d3748;
   color: white;
+}
+/* SKILLS PAGE RESPONSIVENESS */
+@media (max-width: 1024px) {
+  .skills {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .skill-category {
+    max-width: 90%;
+  }
 }
 
 /* CONTACT PAGE CSS */
@@ -779,7 +926,19 @@ button:hover {
   }
 }
 
+/* CONTACT PAGE RESPONSIVENESS */
+@media (max-width: 1024px) {
+  .contact-container {
+    flex-direction: column;
+  }
 
+  .contact-info-section,
+  .contact-form-section {
+    width: 90%;
+    text-align: center;
+    padding: 1.5rem;
+  }
+}
 
 /* LOGIN PAGE CSS */
 
@@ -859,6 +1018,13 @@ button:hover {
   .login button {
     padding: 0.6rem;
     font-size: 0.9rem;
+  }
+}
+
+/* LOGIN PAGE RESPONSIVENESS */
+@media (max-width: 768px) {
+  .login {
+    width: 90%;
   }
 }
 
@@ -1068,3 +1234,25 @@ button:hover {
   }
 }
 
+/* REVIEW PAGE RESPONSIVENESS */
+@media (max-width: 1024px) {
+  .review-container {
+    flex-direction: column;
+  }
+
+  .review-form,
+  .review-list {
+    width: 90%;
+    max-width: none;
+  }
+}
+@media (max-width: 768px) {
+  .review-form,
+  .review-list {
+    padding: 1.5rem;
+  }
+
+  .star-rating span {
+    font-size: 1.2rem;
+  }
+}
