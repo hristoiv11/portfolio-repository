@@ -29,10 +29,39 @@ public class ProjectController {
         return ResponseEntity.status(HttpStatus.OK).body(projectService.getAllProjects());
     }
 
+    /*
     @GetMapping("/{projectId}")
     public ResponseEntity<ProjectResponseDTO> getProjectByProjectID(@PathVariable String projectId){
 
         return ResponseEntity.status(HttpStatus.OK).body(projectService.getProjectByProjectID(projectId));
+    }
+
+     */
+
+    @GetMapping("/{projectId}")
+    public ResponseEntity<ProjectResponseDTO> getProjectByProjectID(@PathVariable String projectId,
+                                                                    @RequestParam(defaultValue = "en") String lang) {
+        ProjectResponseDTO project = projectService.getProjectByProjectID(projectId);
+
+        if (project == null) {
+            throw new NotFoundException("Project data not found for ID: " + projectId);
+        }
+
+        // Select the appropriate description based on the requested language
+        String description = "fr".equalsIgnoreCase(lang) ? project.getDescriptionFr() : project.getDescriptionEn();
+
+        // Construct and return the response using the constructor
+        ProjectResponseDTO response = new ProjectResponseDTO(
+                project.getProjectId(),
+                project.getName(),
+                project.getDescriptionEn(),
+                project.getDescriptionFr(),
+                project.getTechnologies(),
+                project.getLink(),
+                project.getImage()
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping()
@@ -41,6 +70,7 @@ public class ProjectController {
         return ResponseEntity.status(HttpStatus.CREATED).body(projectService.addProject(projectRequestDTO));
     }
 
+    /*
     @PutMapping("/{projectId}")
     public ResponseEntity<ProjectResponseDTO> updateProject(@RequestBody ProjectRequestDTO projectRequestDTO,
                                                             @PathVariable String projectId){
@@ -53,6 +83,37 @@ public class ProjectController {
         }
 
     }
+
+     */
+
+    @PutMapping("/{projectId}")
+    public ResponseEntity<ProjectResponseDTO> updateProject(@RequestBody ProjectRequestDTO projectRequestDTO,
+                                                            @PathVariable String projectId,
+                                                            @RequestParam(defaultValue = "en") String lang) {
+        try {
+            ProjectResponseDTO currentProject = projectService.getProjectByProjectID(projectId);
+            if (currentProject == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+
+            // Update only the requested language description
+            String newDescriptionEn = currentProject.getDescriptionEn();
+            String newDescriptionFr = currentProject.getDescriptionFr();
+
+            if ("fr".equalsIgnoreCase(lang)) {
+                newDescriptionFr = projectRequestDTO.getDescriptionFr(); // Update French description
+            } else {
+                newDescriptionEn = projectRequestDTO.getDescriptionEn(); // Update English description
+            }
+
+            ProjectResponseDTO updatedProject = projectService.updateProject(projectRequestDTO, projectId);
+
+            return ResponseEntity.status(HttpStatus.OK).body(updatedProject);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
     @DeleteMapping("/{projectId}")
     public ResponseEntity<Void> deleteProject(@PathVariable String projectId){
 

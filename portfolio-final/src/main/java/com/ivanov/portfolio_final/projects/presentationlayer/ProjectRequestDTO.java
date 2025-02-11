@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 public class ProjectRequestDTO {
 
     private String name;
-    private String description;
+    private String descriptionEn;
+    private String descriptionFr;
     private String technologies;
     private String link;
     private String image;

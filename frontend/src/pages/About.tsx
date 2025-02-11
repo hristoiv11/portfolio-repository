@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../App.css";
-
+import {useTranslation} from "react-i18next";
+import i18n from "../i18n";
 interface AboutData {
     aboutId: string;
     image: string; // Holds the URL or Base64 string of the image
@@ -9,6 +10,7 @@ interface AboutData {
 }
 
 const About: React.FC = () => {
+    const { t } = useTranslation();
     const [aboutData, setAboutData] = useState<AboutData | null>(null);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
     const [showAddLanguageModal, setShowAddLanguageModal] = useState(false);
@@ -23,6 +25,7 @@ const About: React.FC = () => {
     const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false);
     const [showDeleteSuccess, setShowDeleteSuccess] = useState<boolean>(false);
 
+    /*
     useEffect(() => {
 
         const token = localStorage.getItem("adminToken");
@@ -40,7 +43,7 @@ const About: React.FC = () => {
                         flagUrl: typeof flagUrl === "string" ? flagUrl : ""
                     }));
                 } catch (error) {
-                    console.error("Error parsing flags JSON:", error);
+                    console.error(t("errorParsingFlags"), error);
                 }
 
                 setAboutData({
@@ -54,14 +57,52 @@ const About: React.FC = () => {
                 setNewDescription(data.description);
             })
             .catch((error) => {
-                console.error("Error fetching about data:", error);
+                console.error(t("errorFetchingAboutData"), error);
             });
     }, []);
 
 
+     */
+
+    useEffect(() => {
+        const lang = i18n.language; // ✅ Get the current language dynamically
+
+        const token = localStorage.getItem("adminToken");
+        setIsAdmin(!!token); // ✅ True if token exists
+
+        fetch(`http://localhost:8080/api/about/1?lang=${lang}`) // ✅ Fetch based on selected language
+            .then((response) => response.json())
+            .then((data) => {
+                let languagesArray: { name: string; flagUrl: string }[] = [];
+
+                try {
+                    const parsedFlags = JSON.parse(data.flags || "{}");
+                    languagesArray = Object.entries(parsedFlags).map(([name, flagUrl]) => ({
+                        name: name as string,
+                        flagUrl: typeof flagUrl === "string" ? flagUrl : ""
+                    }));
+                } catch (error) {
+                    console.error(t("errorParsingFlags"), error);
+                }
+
+                setAboutData({
+                    aboutId: data.aboutId,
+                    image: data.image,
+                    description: lang === "fr" ? data.descriptionFr : data.descriptionEn, // ✅ Select correct description
+                    languages: languagesArray
+                });
+
+                // ✅ Prefill the correct description in the input field
+                setNewDescription(lang === "fr" ? data.descriptionFr : data.descriptionEn);
+            })
+            .catch((error) => {
+                console.error(t("errorFetchingAboutData"), error);
+            });
+    }, [i18n.language]);
+
 
     if (!aboutData) {
-        return <p>Loading...</p>; // Show a loading message while fetching data
+        return <p>{t("loading")}</p>; // Show a loading message while fetching data
     }
 
     // Handle file selection
@@ -71,6 +112,7 @@ const About: React.FC = () => {
         }
     };
 
+    /*
     const handleUpdateAbout = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!aboutData) return;
@@ -102,7 +144,8 @@ const About: React.FC = () => {
             });
 
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                //throw new Error(`HTTP error! status: ${response.status}`);
+                throw new Error(`${t("httpError").replace("{status}", response.status.toString())}`);
             }
 
             const updatedData = await response.json();
@@ -121,11 +164,58 @@ const About: React.FC = () => {
             });
 
             setShowUpdateModal(false);
-            console.log("✅ About section updated successfully");
+            console.log(t("aboutUpdatedSuccess"));
         } catch (error) {
-            console.error("❌ Error updating about:", error);
+            console.error(t("errorUpdatingAbout"), error);
         }
     };
+
+     */
+
+    const handleUpdateAbout = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!aboutData) return;
+
+        const lang = i18n.language; // Get the current language (en/fr)
+
+        const updateData = {
+            image: selectedImagePreview || aboutData.image, // ✅ Keep image if unchanged
+            descriptionEn: lang === "en" ? newDescription : aboutData.descriptionEn, // ✅ Update only English if selected
+            descriptionFr: lang === "fr" ? newDescription : aboutData.descriptionFr, // ✅ Update only French if selected
+        };
+
+        try {
+            const response = await fetch(`http://localhost:8080/api/about/${aboutData.aboutId}?lang=${lang}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(updateData),
+            });
+
+            if (!response.ok) {
+                throw new Error(`${t("httpError").replace("{status}", response.status.toString())}`);
+            }
+
+            const updatedData = await response.json();
+
+            setAboutData({
+                aboutId: updatedData.aboutId,
+                image: updatedData.image,
+                description: lang === "fr" ? updatedData.descriptionFr : updatedData.descriptionEn, // ✅ Keep updated text
+                languages: Object.entries(JSON.parse(updatedData.flags || "{}")).map(([name, flagUrl]) => ({
+                    name,
+                    flagUrl: flagUrl as string,
+                })),
+            });
+
+            setShowUpdateModal(false);
+            console.log(t("aboutUpdatedSuccess"));
+        } catch (error) {
+            console.error(t("errorUpdatingAbout"), error);
+        }
+    };
+
 
 
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -142,10 +232,9 @@ const About: React.FC = () => {
 
 
 
-    // Handle adding a new language
     const handleAddLanguage = async () => {
         if (!newLanguage || !newFlagUrl) {
-            console.error("Both language name and flag URL are required");
+            console.error(t("errorInvalidLanguageData"));
             return;
         }
 
@@ -154,7 +243,8 @@ const About: React.FC = () => {
         // Ensure that the new language does not already exist
         const isDuplicate = aboutData.languages.some(lang => lang.name.toLowerCase() === newLanguage.toLowerCase());
         if (isDuplicate) {
-            console.error(`Language "${newLanguage}" already exists!`);
+            //console.error(`Language "${newLanguage}" already exists!`);
+            console.error(t("errorLanguageExists").replace("{language}", newLanguage));
             return;
         }
 
@@ -166,7 +256,7 @@ const About: React.FC = () => {
                 return acc;
             }, {} as Record<string, string>)));
         } catch (error) {
-            console.error("Error parsing flags:", error);
+            console.error(t("errorParsingFlagsResponse"), error);
         }
 
         // Add the new flag
@@ -192,7 +282,8 @@ const About: React.FC = () => {
             });
 
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                //throw new Error(`HTTP error! status: ${response.status}`);
+                throw new Error(`${t("httpError").replace("{status}", response.status.toString())}`);
             }
 
             const updatedData = await response.json();
@@ -202,7 +293,7 @@ const About: React.FC = () => {
             try {
                 parsedFlags = updatedData.flags ? JSON.parse(updatedData.flags) : {};
             } catch (error) {
-                console.error("Error parsing flags from response:", error);
+                console.error(t("errorParsingFlagsResponse"), error);
             }
 
             const parsedLanguages = Object.entries(parsedFlags).map(([name, flagUrl]) => ({
@@ -222,11 +313,12 @@ const About: React.FC = () => {
             setNewLanguage("");
             setNewFlagUrl("");
 
-            console.log("✅ Language added successfully");
+            console.log(t("languageAddedSuccess"));
         } catch (error) {
-            console.error("❌ Failed to add language:", error);
+            console.error(t("errorAddingLanguage"), error);
         }
     };
+
 
     const handleDeleteLanguageClick = (languageName: string) => {
         setSelectedLanguageToDelete(languageName);
@@ -257,7 +349,7 @@ const About: React.FC = () => {
                 }, 2000);
             }
         } catch (error) {
-            console.error("❌ Failed to delete language:", error);
+            console.error(t("errorDeletingLanguage"), error);
         }
     };
 
@@ -268,11 +360,11 @@ const About: React.FC = () => {
             {/* About Section */}
             <div className="oval-container">
                 <img src={aboutData.image} alt="About Me" className="about-image" />
-                <h1>About Me</h1>
+                <h1>{t("aboutTitle")}</h1>
                 <p>{aboutData.description}</p>
                 {isAdmin && (
                     <button className="btn-update" onClick={() => setShowUpdateModal(true)}>
-                        Update
+                        {t("updateButton")}
                     </button>
                 )}
 
@@ -280,14 +372,14 @@ const About: React.FC = () => {
 
             {/* Languages Section */}
             <div className="languages-container">
-                <h1>Languages</h1>
+                <h1>{t("languagesTitle")}</h1>
                 <div className="languages">
                     <div className="languages">
                         {aboutData?.languages?.length ? (
                             aboutData.languages.map(({ name, flagUrl }, index) => (
                                 <div key={`${name}-${index}`} className="language-item">
                                     <img src={flagUrl} alt={name} className="flag" />
-                                    <p>{name}</p>
+                                    <p>{t(`languages.${name}`,name)}</p>
 
                                     {/* Only show delete button if Admin */}
                                     {isAdmin && (
@@ -296,7 +388,7 @@ const About: React.FC = () => {
                                 </div>
                             ))
                         ) : (
-                            <p>No languages available</p>
+                            <p>{t("noLanguages")}</p>
                         )}
 
                     </div>
@@ -306,7 +398,7 @@ const About: React.FC = () => {
 
                 {isAdmin && (
                     <div className="language-buttons">
-                        <button className="btn-add" onClick={() => setShowAddLanguageModal(true)}>Add Language</button>
+                        <button className="btn-add" onClick={() => setShowAddLanguageModal(true)}>{t("addLanguageButton")}</button>
                     </div>
                 )}
 
@@ -316,14 +408,14 @@ const About: React.FC = () => {
             {showUpdateModal && (
                 <div className="modal-overlay">
                     <div className="modal">
-                        <h2>Update About Section</h2>
+                        <h2>{t("updateTitle")}</h2>
                         <form onSubmit={handleUpdateAbout}>
                             <div className="form-group">
-                                <label>New Profile Picture</label>
+                                <label>{t("newProfilePictureLabel")}</label>
                                 <input type="file" accept="image/*" onChange={handleImageUpload} />
                             </div>
                             <div className="form-group">
-                                <label>Description</label>
+                                <label>{t("descriptionLabel")}</label>
                                 <textarea
                                     value={newDescription}
                                     onChange={(e) => setNewDescription(e.target.value)}
@@ -331,8 +423,8 @@ const About: React.FC = () => {
                                 />
                             </div>
                             <div className="form-buttons">
-                                <button type="button" className="btn-close" onClick={() => setShowUpdateModal(false)}>Cancel</button>
-                                <button type="submit" className="btn-save">Update</button>
+                                <button type="button" className="btn-close" onClick={() => setShowUpdateModal(false)}>{t("cancelButton")}</button>
+                                <button type="submit" className="btn-save">{t("updateButton")}</button>
                             </div>
                         </form>
                     </div>
@@ -344,10 +436,10 @@ const About: React.FC = () => {
             {showAddLanguageModal && (
                 <div className="modal-overlay">
                     <div className="modal">
-                        <h2>Add Language</h2>
+                        <h2>{t("addLanguageTitle")}</h2>
                         <form>
                             <div className="form-group">
-                                <label>Language Name</label>
+                                <label>{t("languageNameLabel")}</label>
                                 <input
                                     type="text"
                                     value={newLanguage}
@@ -356,7 +448,7 @@ const About: React.FC = () => {
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Flag URL</label>
+                                <label>{t("flagUrlLabel")}</label>
                                 <input
                                     type="text"
                                     value={newFlagUrl}
@@ -366,10 +458,10 @@ const About: React.FC = () => {
                             </div>
                             <div className="form-buttons">
                                 <button type="button" className="btn-close" onClick={() => setShowAddLanguageModal(false)}>
-                                    Cancel
+                                    {t("cancelButton")}
                                 </button>
                                 <button type="button" className="btn-save" onClick={handleAddLanguage}>
-                                    Add
+                                    {t("addLanguageButton")}
                                 </button>
                             </div>
 
@@ -383,19 +475,19 @@ const About: React.FC = () => {
                     <div className="modal">
                         {!showDeleteSuccess ? (
                             <>
-                                <h2>Confirm Deletion</h2>
-                                <p>Are you sure you want to delete <strong>{selectedLanguageToDelete}</strong>?</p>
+                                <h2>{t("confirmDeleteTitle")}</h2>
+                                <p>{t("confirmDeleteMessage").replace("{language}", selectedLanguageToDelete)}</p>
                                 <div className="form-buttons">
                                     <button className="btn-close" onClick={() => setDeleteConfirmation(false)}>
-                                        Cancel
+                                        {t("cancelButton")}
                                     </button>
                                     <button className="btn-save" onClick={confirmDeleteLanguage}>
-                                        Yes, Delete
+                                        {t("deleteButton")}
                                     </button>
                                 </div>
                             </>
                         ) : (
-                            <h2>✅ Language deleted successfully!</h2>
+                            <h2>✅ {t("deleteSuccessMessage")}</h2>
                         )}
                     </div>
                 </div>

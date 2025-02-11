@@ -43,17 +43,22 @@ public class AboutServiceImpl implements AboutService{
 
     @Override
     public AboutResponseDTO getAboutByAboutID(String aboutId) {
-
         About about = aboutRepository.findAboutByAboutId(aboutId);
 
-        if(about == null){
+        if (about == null) {
             throw new NotFoundException("Unknown aboutId: " + aboutId);
         }
 
-        AboutResponseDTO aboutResponseDTO = new AboutResponseDTO();
-        BeanUtils.copyProperties(about,aboutResponseDTO);
-        return aboutResponseDTO;
+        return new AboutResponseDTO(
+                about.getAboutId(),
+                about.getImage(),
+                about.getDescriptionEn(),
+                about.getDescriptionFr(),
+                about.getLanguages(),
+                about.getFlags()
+        );
     }
+
 
     @Override
     public AboutResponseDTO addAbout(AboutRequestDTO aboutRequestDTO) {
@@ -72,26 +77,41 @@ public class AboutServiceImpl implements AboutService{
 
     @Override
     public AboutResponseDTO updateAbout(AboutRequestDTO aboutRequestDTO, String aboutId) {
-
         About foundAbout = aboutRepository.findAboutByAboutId(aboutId);
 
-        if(foundAbout == null){
+        if (foundAbout == null) {
             throw new NotFoundException("Unknown aboutId: " + aboutId);
         }
 
-        About about = new About();
-        BeanUtils.copyProperties(aboutRequestDTO,about);
+        // Update fields only if they are provided
+        if (aboutRequestDTO.getImage() != null) {
+            foundAbout.setImage(aboutRequestDTO.getImage());
+        }
+        if (aboutRequestDTO.getDescriptionEn() != null) {
+            foundAbout.setDescriptionEn(aboutRequestDTO.getDescriptionEn());
+        }
+        if (aboutRequestDTO.getDescriptionFr() != null) {
+            foundAbout.setDescriptionFr(aboutRequestDTO.getDescriptionFr());
+        }
+        if (aboutRequestDTO.getLanguages() != null) {
+            foundAbout.setLanguages(aboutRequestDTO.getLanguages());
+        }
+        if (aboutRequestDTO.getFlags() != null) {
+            foundAbout.setFlags(aboutRequestDTO.getFlags());
+        }
 
-        about.setAboutId(foundAbout.getAboutId());
-        about.setId(foundAbout.getId());
+        About savedAbout = aboutRepository.save(foundAbout);
 
-        About savedAbout = aboutRepository.save(about);
-
-        AboutResponseDTO aboutResponseDTO = new AboutResponseDTO();
-        BeanUtils.copyProperties(savedAbout,aboutResponseDTO);
-
-        return aboutResponseDTO;
+        return new AboutResponseDTO(
+                savedAbout.getAboutId(),
+                savedAbout.getImage(),
+                savedAbout.getDescriptionEn(),
+                savedAbout.getDescriptionFr(),
+                savedAbout.getLanguages(),
+                savedAbout.getFlags()
+        );
     }
+
 
     @Override
     public void deleteAbout(String aboutId) {

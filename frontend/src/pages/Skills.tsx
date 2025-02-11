@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../App.css";
+import {useTranslation} from "react-i18next";
 
 interface Skills {
     skillId: string;
@@ -11,6 +12,7 @@ interface Skills {
 }
 
 const Skills: React.FC = () => {
+    const { t } = useTranslation();
     const [skills, setSkills] = useState<Skills | null>(null);
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [showAddModal, setShowAddModal] = useState(false);
@@ -23,11 +25,11 @@ const Skills: React.FC = () => {
     const [selectedSkillToDelete, setSelectedSkillToDelete] = useState<string>("");
     const [newSkill, setNewSkill] = useState<{ category: string; skill: string }>({ category: "", skill: "" });
     const categoryNames: { [key: string]: string } = {
-        languages: "Programming Languages",
-        frameworks: "Frameworks & Libraries",
-        tools: "Tools & Technologies",
-        databaseTechnologies: "Databases",
-        methodologies: "Methodologies",
+        languages: t("languagesSkill"),
+        frameworks: t("frameworks"),
+        tools: t("tools"),
+        databaseTechnologies: t("databases"),
+        methodologies: t("methodologies"),
     };
 
     const [updateSkill, setUpdateSkill] = useState<{ category: string; skill: string }>({ category: "", skill: "" });
@@ -282,7 +284,7 @@ const Skills: React.FC = () => {
 
     return (
         <div className="skills-page">
-            <h1 className="skills-title">Skills</h1>
+            <h1 className="skills-title">{t("skillsTitle")}</h1>
 
             {isAdmin && (
                 <button
@@ -293,7 +295,7 @@ const Skills: React.FC = () => {
                         setShowAddModal(true);
                     }}
                 >
-                    Add New Skill
+                    {t("addSkill")}
                 </button>
             )}
 
@@ -314,10 +316,10 @@ const Skills: React.FC = () => {
                                 {isAdmin && (
                                     <div className="skill-buttons-container">
                                         <button className="btn-update" onClick={() => handleUpdateClick(category)}>
-                                            Update
+                                            {t("updateSkill")}
                                         </button>
                                         <button className="btn-delete-skill" onClick={() => handleDeleteClick(category)}>
-                                            Delete
+                                            {t("deleteSkill")}
                                         </button>
                                     </div>
                                 )}
@@ -329,16 +331,16 @@ const Skills: React.FC = () => {
             {showAddModal && (
                 <div className="modal-overlay">
                     <div className="modal">
-                        <h2>Add New Skill</h2>
+                        <h2>{t("addSkill")}</h2>
                         <form>
                             <div className="form-group">
-                                <label>Category</label>
+                                <label>{t("selectCategory")}</label>
                                 <select
                                     name="category"
                                     value={selectedCategory}
                                     onChange={(e) => setSelectedCategory(e.target.value)}
                                 >
-                                    <option value="">-- Select Category --</option>
+                                    <option value="">-- {t("selectCategory")}--</option>
                                     {Object.keys(categoryNames).map((key) => (
                                         <option key={key} value={key}>{categoryNames[key]}</option>
                                     ))}
@@ -347,7 +349,7 @@ const Skills: React.FC = () => {
 
                             {selectedCategory && (
                                 <div className="form-group">
-                                    <label>Skill Name</label>
+                                    <label>{t("newSkillName")}</label>
                                     <input
                                         type="text"
                                         name="skill"
@@ -360,7 +362,7 @@ const Skills: React.FC = () => {
 
                             <div className="form-buttons">
                                 <button type="button" className="btn-close" onClick={() => setShowAddModal(false)}>
-                                    Cancel
+                                    {t("cancelSkill")}
                                 </button>
                                 <button
                                     type="button"
@@ -368,7 +370,7 @@ const Skills: React.FC = () => {
                                     onClick={handleAddSkill}
                                     disabled={!selectedCategory || !newSkillName}
                                 >
-                                    Save
+                                    {t("saveSkill")}
                                 </button>
                             </div>
                         </form>
@@ -380,10 +382,10 @@ const Skills: React.FC = () => {
             {showUpdateModal && (
                 <div className="modal-overlay">
                     <div className="modal">
-                        <h2>Update Skill</h2>
+                        <h2>{t("updateSkill")}</h2>
                         <form>
                             <div className="form-group">
-                                <label>Select Skill to Update</label>
+                                <label>{t("selectSkillToUpdate")}</label>
                                 <select
                                     value={selectedSkillToUpdate}
                                     onChange={(e) => {
@@ -391,7 +393,7 @@ const Skills: React.FC = () => {
                                         setNewSkillName(e.target.value);
                                     }}
                                 >
-                                    <option value="">-- Select Skill --</option>
+                                    <option value="">-- {t("selectSkill")} --</option>
                                     {skills[selectedCategory as keyof Skills]
                                         ?.split(", ")
                                         .map((skill, index) => (
@@ -402,7 +404,7 @@ const Skills: React.FC = () => {
 
                             {selectedSkillToUpdate && (
                                 <div className="form-group">
-                                    <label>New Skill Name</label>
+                                    <label>{t("newSkillName")}</label>
                                     <input
                                         type="text"
                                         name="skill"
@@ -415,10 +417,10 @@ const Skills: React.FC = () => {
 
                             <div className="form-buttons">
                                 <button type="button" className="btn-close" onClick={() => setShowUpdateModal(false)}>
-                                    Cancel
+                                    {t("cancelSkill")}
                                 </button>
                                 <button type="button" className="btn-save" onClick={handleUpdateSkill} disabled={!selectedSkillToUpdate}>
-                                    Update
+                                    {t("updateSkill")}
                                 </button>
                             </div>
                         </form>
@@ -431,15 +433,15 @@ const Skills: React.FC = () => {
                     <div className="modal">
                         {!deleteConfirmation ? (
                             <>
-                                <h2>Delete Skill</h2>
+                                <h2>{t("deleteSkill")}</h2>
                                 <form>
                                     <div className="form-group">
-                                        <label>Skill to Delete</label>
+                                        <label>{t("selectSkillToDelete")}</label>
                                         <select
                                             value={selectedSkillToDelete}
                                             onChange={(e) => setSelectedSkillToDelete(e.target.value)}
                                         >
-                                            <option value="">-- Select Skill --</option>
+                                            <option value="">-- {t("selectSkill")} --</option>
                                             {skills[selectedCategory as keyof Skills]
                                                 ?.split(", ")
                                                 .map((skill, index) => (
@@ -450,7 +452,7 @@ const Skills: React.FC = () => {
 
                                     <div className="form-buttons">
                                         <button type="button" className="btn-close" onClick={() => setShowDeleteModal(false)}>
-                                            Cancel
+                                            {t("cancelSkill")}
                                         </button>
                                         <button
                                             type="button"
@@ -458,26 +460,26 @@ const Skills: React.FC = () => {
                                             onClick={() => setDeleteConfirmation(true)}
                                             disabled={!selectedSkillToDelete}
                                         >
-                                            Delete
+                                            {t("deleteSkill")}
                                         </button>
                                     </div>
                                 </form>
                             </>
                         ) : !showDeleteSuccess ? (
                             <>
-                                <h2>Confirm Deletion</h2>
-                                <p>Are you sure you want to delete <strong>{selectedSkillToDelete}</strong>?</p>
+                                <h2>{t("confirmSkillDelete")}</h2>
+                                <p>{t("confirmSkillDelete")} <strong>{selectedSkillToDelete}</strong>?</p>
                                 <div className="form-buttons">
                                     <button className="btn-close" onClick={() => setDeleteConfirmation(false)}>
-                                        Cancel
+                                        {t("cancelSkill")}
                                     </button>
                                     <button className="btn-save" onClick={confirmDeleteSkill}>
-                                        Yes, Delete
+                                        {t("yesDeleteSkill")}
                                     </button>
                                 </div>
                             </>
                         ) : (
-                            <h2>✅ Skill deleted successfully!</h2>
+                            <h2>{t("deleteSkillSuccess")}</h2>
                         )}
                     </div>
                 </div>

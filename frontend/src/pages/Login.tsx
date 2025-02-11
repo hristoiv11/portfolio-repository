@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
+import {useTranslation} from "react-i18next";
 
 const Login: React.FC = () => {
+    const { t } = useTranslation();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
+
 
     const handleLogin = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -19,7 +22,7 @@ const Login: React.FC = () => {
             });
 
             if (!response.ok) {
-                throw new Error("Invalid username or password");
+                throw new Error(t("invalidCredentials"));
             }
 
             const data = await response.json();
@@ -30,17 +33,17 @@ const Login: React.FC = () => {
 
             navigate("/");
         } catch (err) {
-            setError("Login failed. Please check your credentials.");
+            setError(t("loginError"));
         }
     };
 
     return (
         <div className="login">
-            <h1>Log In</h1>
+            <h1>{t("loginTitle")}</h1>
             {error && <p style={{ color: "red" }}>{error}</p>}
             <form onSubmit={handleLogin}>
                 <div>
-                    <label htmlFor="username">Username:</label>
+                    <label htmlFor="username">{t("loginUsername")}:</label>
                     <input
                         type="text"
                         id="username"
@@ -51,7 +54,7 @@ const Login: React.FC = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="password">Password:</label>
+                    <label htmlFor="password">{t("loginPassword")}:</label>
                     <input
                         type="password"
                         id="password"
@@ -61,7 +64,7 @@ const Login: React.FC = () => {
                         required
                     />
                 </div>
-                <button type="submit">Log In</button>
+                <button type="submit">{t("loginButton")}</button>
             </form>
         </div>
     );

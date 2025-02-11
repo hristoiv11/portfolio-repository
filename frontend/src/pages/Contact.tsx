@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "../App.css";
+import {useTranslation} from "react-i18next";
 
 const Contact: React.FC = () => {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({ name: "", email: "", subject: "",message: "" });
     const [isSending, setIsSending] = useState(false); // ✅ Disable button when sending
     const [statusMessage, setStatusMessage] = useState<string | null>(null); // ✅ Display status message
@@ -26,7 +28,7 @@ const Contact: React.FC = () => {
             });
 
             if (response.ok) {
-                setStatusMessage("✅ Message sent successfully!");
+                setStatusMessage(t("formSuccess"));
                 setFormData({ name: "", email: "", subject:"", message: "" }); // Clear form
 
                 // ✅ Hide the message after 5 seconds
@@ -35,11 +37,11 @@ const Contact: React.FC = () => {
                 }, 3000);
 
             } else {
-                setStatusMessage("❌ Failed to send message. Please try again.");
+                setStatusMessage(t("formFailure"));
             }
         } catch (error) {
             console.error("Error sending message:", error);
-            setStatusMessage("❌ Error: Could not send the message.");
+            setStatusMessage(t("formError"));
         } finally {
             setIsSending(false);
         }
@@ -55,11 +57,11 @@ const Contact: React.FC = () => {
             <div className="contact-container">
                 {/* Contact Info */}
                 <div className="contact-info-section">
-                    <h1>Contact Info</h1>
+                    <h1>{t("contactTitle")}</h1>
                     <div className="contact-info">
-                        <p>Email: {aboutData.email}</p>
+                        <p>{t("email")}: {aboutData.email}</p>
                         <p>
-                            LinkedIn:{" "}
+                            {t("linkedin")}:{" "}
                             <a
                                 href={aboutData.linkedin}
                                 target="_blank"
@@ -73,10 +75,10 @@ const Contact: React.FC = () => {
 
                 {/* Contact Form */}
                 <div className="contact-form-section">
-                    <h1>Contact Me</h1>
+                    <h1>{t("infoTitle")}</h1>
                     <form onSubmit={handleSubmit}>
                         <label>
-                            Subject:
+                            {t("formSubject")}:
                             <input
                                 type="text"
                                 name="subject"
@@ -86,7 +88,7 @@ const Contact: React.FC = () => {
                             />
                         </label>
                         <label>
-                            Name:
+                            {t("formName")}:
                             <input
                                 type="text"
                                 name="name"
@@ -96,7 +98,7 @@ const Contact: React.FC = () => {
                             />
                         </label>
                         <label>
-                            Email:
+                            {t("formEmail")}:
                             <input
                                 type="email"
                                 name="email"
@@ -106,7 +108,7 @@ const Contact: React.FC = () => {
                             />
                         </label>
                         <label>
-                            Message:
+                            {t("formMessage")}:
                             <textarea
                                 name="message"
                                 value={formData.message}
@@ -115,7 +117,7 @@ const Contact: React.FC = () => {
                             ></textarea>
                         </label>
                         <button type="submit" disabled={isSending}>
-                            {isSending ? "Sending..." : "Send"}
+                            {isSending ? t("formSending") : t("formSend")}
                         </button>
                     </form>
                     {statusMessage && <p className="status-message">{statusMessage}</p>} {/* ✅ Show status message */}

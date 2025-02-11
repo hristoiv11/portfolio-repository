@@ -34,10 +34,33 @@ public class AboutController {
     }
 
     @GetMapping("/{aboutId}")
-    public ResponseEntity<AboutResponseDTO> getAboutByAboutID(@PathVariable String aboutId){
+    public ResponseEntity<AboutResponseDTO> getAboutByAboutID(@PathVariable String aboutId,
+                                                              @RequestParam(defaultValue = "en") String lang) {
+        AboutResponseDTO about = aboutService.getAboutByAboutID(aboutId);
+        if (about == null) {
+            throw new NotFoundException("About data not found for ID: " + aboutId);
+        }
 
-        return ResponseEntity.status(HttpStatus.OK).body(aboutService.getAboutByAboutID(aboutId));
+        // Return the requested language description
+        String description;
+        if ("fr".equalsIgnoreCase(lang)) {
+            description = about.getDescriptionFr();
+        } else {
+            description = about.getDescriptionEn(); // Default to English
+        }
+
+        AboutResponseDTO response = new AboutResponseDTO(
+                about.getAboutId(),
+                about.getImage(),
+                about.getDescriptionEn(),
+                about.getDescriptionFr(),
+                about.getLanguages(),
+                about.getFlags()
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
 
     @PostMapping()
     public ResponseEntity<AboutResponseDTO> addAbout(@RequestBody AboutRequestDTO aboutRequestDTO) {
@@ -47,16 +70,35 @@ public class AboutController {
 
     @PutMapping("/{aboutId}")
     public ResponseEntity<AboutResponseDTO> updateAbout(@RequestBody AboutRequestDTO aboutRequestDTO,
-                                                            @PathVariable String aboutId){
-        try{
-            AboutResponseDTO updateAbout = aboutService.updateAbout(aboutRequestDTO,aboutId);
-            return ResponseEntity.status(HttpStatus.OK).body(updateAbout);
-        }
-        catch (Exception e){
+                                                        @PathVariable String aboutId,
+                                                        @RequestParam(defaultValue = "en") String lang) {
+        try {
+            AboutResponseDTO currentAbout = aboutService.getAboutByAboutID(aboutId);
+            if (currentAbout == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+
+            // Update only the requested language description
+            String newDescriptionEn = currentAbout.getDescriptionEn();
+            String newDescriptionFr = currentAbout.getDescriptionFr();
+
+            if ("fr".equalsIgnoreCase(lang)) {
+                newDescriptionFr = aboutRequestDTO.getDescriptionFr(); // Update French description
+            } else {
+                newDescriptionEn = aboutRequestDTO.getDescriptionEn(); // Update English description
+            }
+
+            AboutResponseDTO updatedAbout = aboutService.updateAbout(
+                    aboutRequestDTO,
+                    aboutId
+            );
+
+            return ResponseEntity.status(HttpStatus.OK).body(updatedAbout);
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-
     }
+
     @DeleteMapping("/{aboutId}")
     public ResponseEntity<Void> deleteAbout(@PathVariable String aboutId){
 

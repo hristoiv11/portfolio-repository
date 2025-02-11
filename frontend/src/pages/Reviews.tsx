@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import "../App.css";
+import {useTranslation} from "react-i18next";
 
 interface Review {
     id: number;
@@ -9,6 +10,7 @@ interface Review {
 }
 
 const Reviews: React.FC = () => {
+    const { t } = useTranslation();
     const [reviews, setReviews] = useState<Review[]>([]);
     const [name, setName] = useState<string>('');
     const [message, setMessage] = useState<string>('');
@@ -51,7 +53,7 @@ const Reviews: React.FC = () => {
         setStatusMessage(null);
 
         if (!name.trim() || !message.trim() || rating === 0) {
-            setStatusMessage("❌ Please fill out all fields and select a rating.");
+            setStatusMessage(t("emptyFields"));
             setIsSubmitting(false);
             return;
         }
@@ -68,18 +70,18 @@ const Reviews: React.FC = () => {
             });
 
             if (response.ok) {
-                setStatusMessage("✅ Review submitted!");
+                setStatusMessage(t("reviewSuccess"));
                 setName('');
                 setMessage('');
                 setRating(0);
 
                 setTimeout(() => setStatusMessage(null), 3000);
             } else {
-                setStatusMessage("❌ Failed to submit review. Please try again.");
+                setStatusMessage(t("reviewFailure"));
             }
         } catch (error) {
             console.error("Error submitting review:", error);
-            setStatusMessage("❌ Error: Could not submit review.");
+            setStatusMessage(t("reviewError"));
         } finally {
             setIsSubmitting(false);
         }
@@ -138,30 +140,30 @@ const Reviews: React.FC = () => {
 
     return (
         <div className="reviews-page">
-            <h1>Reviews</h1>
+            <h1>{t("reviewsTitle")}</h1>
             <div className="review-container">
                 {/* Review Form */}
                 <div className="review-form">
-                    <h2>Leave a Review</h2>
+                    <h2>{t("leaveReviewPage")}</h2>
                     <form onSubmit={handleSubmit}>
-                        <label htmlFor="name">Name:</label>
+                        <label htmlFor="name">{t("name")}:</label>
                         <input
                             id="name"
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            placeholder="Enter your name"
+                            placeholder={t("namePlaceholder")}
                             required
                         />
-                        <label htmlFor="message">Message:</label>
+                        <label htmlFor="message">{t("message")}:</label>
                         <textarea
                             id="message"
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
-                            placeholder="Enter your message"
+                            placeholder={t("messagePlaceholder")}
                             required
                         />
-                        <label>Rating:</label>
+                        <label>{t("rating")}:</label>
                         <div className="star-rating">
                             {[1, 2, 3, 4, 5].map((star) => (
                                 <span
@@ -174,7 +176,7 @@ const Reviews: React.FC = () => {
                             ))}
                         </div>
                         <button type="submit" disabled={isSubmitting}>
-                            {isSubmitting ? "Submitting..." : "Submit"}
+                            {isSubmitting ? t("submitting") : t("submitReview")}
                         </button>
                     </form>
                     {statusMessage && <p className="status-message">{statusMessage}</p>}
@@ -182,7 +184,7 @@ const Reviews: React.FC = () => {
 
                 {/* Display Approved Reviews */}
                 <div className="review-list">
-                    <h2>What People Say</h2>
+                    <h2>{t("reviewListTitle")}</h2>
                     {reviews.length > 0 ? (
                         <ul>
                             {reviews.map((review) => (
@@ -201,14 +203,14 @@ const Reviews: React.FC = () => {
                                             className="btn-delete"
                                             onClick={() => handleDeleteClick(review.id)}
                                         >
-                                            Delete
+                                            {t("deleteReview")}
                                         </button>
                                     )}
                                 </li>
                             ))}
                         </ul>
                     ) : (
-                        <p>No approved reviews yet. Be the first to leave a review!</p>
+                        <p>{t("noReviews")}</p>
                     )}
 
                     {deleteReviewId !== null && (
@@ -216,17 +218,17 @@ const Reviews: React.FC = () => {
                             <div className="review-modal">
                                 {!showDeleteSuccess ? (
                                     <>
-                                        <h2>Confirm Deletion</h2>
-                                        <p>Are you sure you want to delete this review?</p>
+                                        <h2>{t("confirmDelete")}</h2>
+                                        <p>{t("confirmDelete")}</p>
                                         <button className="review-btn-delete" onClick={confirmDeleteReview}>
-                                            Yes, Delete
+                                            {t("yesDelete")}
                                         </button>
                                         <button className="review-btn-cancel" onClick={() => setDeleteReviewId(null)}>
-                                            Cancel
+                                            {t("cancel")}
                                         </button>
                                     </>
                                 ) : (
-                                    <h2>Review deleted successfully!</h2>
+                                    <h2>{t("deleteSuccess")}</h2>
                                 )}
                             </div>
                         </div>
