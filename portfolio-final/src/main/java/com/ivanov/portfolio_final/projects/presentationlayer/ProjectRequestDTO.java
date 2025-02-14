@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProjectRequestDTO {
 
-    private String name;
+
+    private String nameEn;
+    private String nameFr;
     private String descriptionEn;
     private String descriptionFr;
     private String technologies;

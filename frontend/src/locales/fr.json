@@ -131,8 +131,8 @@
     "close": "Fermer",
     "clientBilling": "Système de gestion des clients et de facturation",
     "petClinic": "Clinique pour animaux",
-    "sneakerEcommerceWS": "E-commerce de baskets avec services web",
-    "sneakerEcommerce": "E-commerce de baskets",
+    "sneakerEcommerceWS": "E-commerce de chaussures avec services web",
+    "sneakerEcommerce": "E-commerce de chaussures",
     "shootingGame": "Jeu de tir 2D",
     "resumeBuilder": "Application de création de CV",
     "clientBillingDescription": "Développement d'un site web et d'une plateforme de facturation automatisée pour un cabinet de conseil comptable au service des petites et moyennes entreprises, avec prise en charge en anglais et en français. Contribution au développement frontend et backend, création et gestion des profils clients, suivi des projets/services facturés à l'heure, génération et stockage des factures au format PDF, et envoi de notifications par e-mail automatisées permettant aux clients de consulter et télécharger leurs factures.",
@@ -177,5 +177,9 @@
     "loginButton": "Se connecter",
     "loginError": "Échec de la connexion. Veuillez vérifier vos identifiants.",
     "invalidCredentials": "Nom d'utilisateur ou mot de passe invalide"
+  },
+  "logout": {
+    "logoutTitle": "Déconnexion en cours...",
+    "logoutMessage": "Vous serez redirigé vers la page d'accueil."
   }
 }

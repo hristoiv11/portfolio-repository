@@ -826,6 +826,7 @@ body {
   gap: 2rem;
   width: 100%;
   max-width: 1280px;
+  align-items: stretch;
 }
 
 .contact-info-section,
@@ -834,10 +835,11 @@ body {
   background: #ffffff;
   border-radius: 1rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
+  padding: 3rem;
   text-align: left;
   color: #333;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-height: 450px;
 }
 
 .contact-info-section:hover,
@@ -930,13 +932,15 @@ button:hover {
 @media (max-width: 1024px) {
   .contact-container {
     flex-direction: column;
+    align-items: center;
   }
 
   .contact-info-section,
   .contact-form-section {
-    width: 90%;
-    text-align: center;
-    padding: 1.5rem;
+    width: 100%;
+    max-width: 700px; /* Increased max-width */
+    padding: 2.5rem; /* Adjusted padding for balance */
+    min-height: 500px; /* Makes sure both sections remain large */
   }
 }
 

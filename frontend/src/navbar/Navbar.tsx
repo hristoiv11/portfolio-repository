@@ -16,7 +16,7 @@ const Navbar: React.FC = () => {
     const handleLogout = () => {
         localStorage.removeItem("adminToken");
         setIsAdmin(false);
-        navigate("/"); // Redirect to Home
+        navigate("/logout"); // Redirect to Home
     };
 
     // Toggle Language between EN and FR

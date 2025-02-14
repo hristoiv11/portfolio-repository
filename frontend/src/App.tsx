@@ -8,8 +8,19 @@ import Reviews from './pages/Reviews.tsx';
 import Navbar from "./navbar/Navbar.tsx";
 import Login from "./pages/Login.tsx";
 import Logout from "./pages/Logout.tsx";
+import {useEffect} from "react";
 
 function App() {
+
+    useEffect(() => {
+
+        const sessionActive = sessionStorage.getItem("sessionActive");
+        if (!sessionActive) {
+            localStorage.removeItem("adminToken");
+            sessionStorage.setItem("sessionActive", "true");
+        }
+    }, []);
+
     return (
         <Router>
             <Navbar/>

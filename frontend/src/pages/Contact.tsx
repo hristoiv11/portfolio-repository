@@ -59,18 +59,23 @@ const Contact: React.FC = () => {
                 <div className="contact-info-section">
                     <h1>{t("contactTitle")}</h1>
                     <div className="contact-info">
-                        <p>{t("email")}: {aboutData.email}</p>
                         <p>
-                            {t("linkedin")}:{" "}
                             <a
-                                href={aboutData.linkedin}
+                                href={`https://mail.google.com/mail/?view=cm&fs=1&to=${aboutData.email}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
+                                className="contact-icon"
                             >
-                                {aboutData.linkedin}
+                                <i className="fas fa-envelope"></i> {t("email")}
+                            </a>
+                        </p>
+                        <p>
+                            <a href={aboutData.linkedin} target="_blank" rel="noopener noreferrer" className="contact-icon">
+                                <i className="fab fa-linkedin"></i> {t("linkedin")}
                             </a>
                         </p>
                     </div>
+
                 </div>
 
                 {/* Contact Form */}

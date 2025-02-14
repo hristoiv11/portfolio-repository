@@ -17,8 +17,11 @@ public class Project {
     @Column(name = "projectid")
     private String projectId;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "name_en", columnDefinition = "TEXT")
+    private String nameEn;
+
+    @Column(name = "name_fr", columnDefinition = "TEXT")
+    private String nameFr;
 
     @Column(name = "description_en", columnDefinition = "TEXT")
     private String descriptionEn;
