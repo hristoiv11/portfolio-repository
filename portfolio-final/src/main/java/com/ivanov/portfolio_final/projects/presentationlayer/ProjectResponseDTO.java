@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 public class ProjectResponseDTO {
 
     private String projectId;
-    private String name;
+    private String nameEn;
+    private String nameFr;
     private String descriptionEn;
     private String descriptionFr;
     private String technologies;

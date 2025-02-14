@@ -173,5 +173,9 @@
     "loginButton": "Log In",
     "loginError": "Login failed. Please check your credentials.",
     "invalidCredentials": "Invalid username or password"
+  },
+  "logout": {
+    "logoutTitle": "Logging Out...",
+    "logoutMessage": "You will be redirected to the home page."
   }
 }

@@ -53,7 +53,8 @@ public class ProjectController {
         // Construct and return the response using the constructor
         ProjectResponseDTO response = new ProjectResponseDTO(
                 project.getProjectId(),
-                project.getName(),
+                project.getNameEn(),
+                project.getNameFr(),
                 project.getDescriptionEn(),
                 project.getDescriptionFr(),
                 project.getTechnologies(),
@@ -97,12 +98,16 @@ public class ProjectController {
             }
 
             // Update only the requested language description
+            String newNameEn = currentProject.getNameEn();
+            String newNameFr = currentProject.getNameFr();
             String newDescriptionEn = currentProject.getDescriptionEn();
             String newDescriptionFr = currentProject.getDescriptionFr();
 
             if ("fr".equalsIgnoreCase(lang)) {
+                newNameFr = projectRequestDTO.getNameFr();
                 newDescriptionFr = projectRequestDTO.getDescriptionFr(); // Update French description
             } else {
+                newNameEn = projectRequestDTO.getNameEn();
                 newDescriptionEn = projectRequestDTO.getDescriptionEn(); // Update English description
             }
 

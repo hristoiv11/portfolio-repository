@@ -67,7 +67,8 @@ const Projects: React.FC = () => {
             .then((data) => {
                 const processedData = data.map((project: Project, index: number) => ({
                     ...project,
-                    id: project.id ?? index, // ✅ Use index as fallback if `id` is missing
+                    id: project.id ?? index,
+                    name: lang === "fr" ? project.nameFr : project.nameEn,
                     description: lang === "fr" ? project.descriptionFr : project.descriptionEn // ✅ Select the correct description
                 }));
                 setProjects(processedData);
@@ -223,9 +224,10 @@ const Projects: React.FC = () => {
         // ✅ Keep the existing image if not changed
         const updateData = {
             image: updateProject.image,
+            nameEn: lang === "en" ? updateProject.name : updateProject.nameEn, // ✅ Update only English if selected
+            nameFr: lang === "fr" ? updateProject.name : updateProject.nameFr,
             descriptionEn: lang === "en" ? updateProject.description : updateProject.descriptionEn, // ✅ Update only English if selected
             descriptionFr: lang === "fr" ? updateProject.description : updateProject.descriptionFr, // ✅ Update only French if selected
-            name: updateProject.name,
             technologies: updateProject.technologies,
             link: updateProject.link,
         };
@@ -251,7 +253,7 @@ const Projects: React.FC = () => {
                     ...p,
                     image: updatedProject.image,
                     description: lang === "fr" ? updatedProject.descriptionFr : updatedProject.descriptionEn, // ✅ Keep updated text
-                    name: updatedProject.name,
+                    name: lang === "fr" ? updatedProject.nameFr : updatedProject.nameEn, // ✅ Keep updated text
                     technologies: updatedProject.technologies,
                     link: updatedProject.link,
                 } : p))

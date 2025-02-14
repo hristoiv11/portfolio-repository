@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 const Logout: React.FC = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -12,13 +14,13 @@ const Logout: React.FC = () => {
 
         setTimeout(() => {
             navigate("/");
-        }, 1000);
+        }, 2000);
     }, [navigate]);
 
     return (
         <div className="logout">
-            <h1>Logging Out...</h1>
-            <p>You will be redirected to the home page.</p>
+            <h1>{t("logoutTitle")}</h1>
+            <p>{t("logoutMessage")}</p>
         </div>
     );
 };

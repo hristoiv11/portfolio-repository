@@ -67,6 +67,9 @@ public class TranslationController {
                 // Login Page
                 "loginTitle", "loginUsername", "loginPassword", "loginButton", "loginError", "invalidCredentials",
 
+                // Logout Page
+                "logoutTitle", "logoutMessage",
+
                 // Projects Page
                 "projectsTitle", "addNewProject", "viewDetails", "githubProject", "deploymentProject",
                 "updateProject", "deleteProject", "confirmDeleteProject", "deleteProjectSuccess",

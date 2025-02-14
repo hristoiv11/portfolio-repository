@@ -69,7 +69,8 @@ public class ProjectServiceImpl implements ProjectService{
 
         return new ProjectResponseDTO(
                 project.getProjectId(),
-                project.getName(),
+                project.getNameEn(),
+                project.getNameFr(),
                 project.getDescriptionEn(),
                 project.getDescriptionFr(),
                 project.getTechnologies(),
@@ -129,8 +130,11 @@ public class ProjectServiceImpl implements ProjectService{
         }
 
         // Update fields only if they are provided
-        if (projectRequestDTO.getName() != null) {
-            foundProject.setName(projectRequestDTO.getName());
+        if (projectRequestDTO.getNameEn() != null) {
+            foundProject.setNameEn(projectRequestDTO.getNameEn());
+        }
+        if (projectRequestDTO.getNameFr() != null) {
+            foundProject.setNameFr(projectRequestDTO.getNameFr());
         }
         if (projectRequestDTO.getDescriptionEn() != null) {
             foundProject.setDescriptionEn(projectRequestDTO.getDescriptionEn());
@@ -152,7 +156,8 @@ public class ProjectServiceImpl implements ProjectService{
 
         return new ProjectResponseDTO(
                 savedProject.getProjectId(),
-                savedProject.getName(),
+                savedProject.getNameEn(),
+                savedProject.getNameFr(),
                 savedProject.getDescriptionEn(),
                 savedProject.getDescriptionFr(),
                 savedProject.getTechnologies(),
