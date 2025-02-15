@@ -60,6 +60,7 @@
     }
   },
   "contact": {
+    "contactZaglavie": "Contact",
     "contactTitle": "Contact Me",
     "infoTitle": "Contact Info",
     "email": "Email",

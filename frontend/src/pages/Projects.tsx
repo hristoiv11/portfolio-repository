@@ -33,29 +33,8 @@ const Projects: React.FC = () => {
     });
     const navigate = useNavigate();
 
+
     /*
-    useEffect(() => {
-
-        const token = localStorage.getItem("adminToken");
-        setIsAdmin(!!token); // True if token exists
-
-        fetch("http://localhost:8080/api/projects")
-            .then((response) => response.json())
-            .then((data) => {
-                // Ensure each project has a unique id fallback if id is missing
-                const processedData = data.map((project: Project, index: number) => ({
-                    ...project,
-                    id: project.id ?? index, // Use index as fallback for missing id
-                }));
-                setProjects(processedData);
-            })
-            .catch((error) =>
-                console.error("Error fetching projects:", error)
-            );
-    }, []);
-
-     */
-
     useEffect(() => {
         const lang = i18n.language; // ✅ Get the current language dynamically
 
@@ -77,6 +56,36 @@ const Projects: React.FC = () => {
                 console.error(t("fetchProjectsError"), error);
             });
     }, [i18n.language]); // ✅ Re-fetch when the language changes
+
+
+     */
+
+    useEffect(() => {
+        fetchProjects(); // ✅ Calls the function when language changes
+    }, [i18n.language]); // ✅ Re-fetch when the language changes
+
+
+    const fetchProjects = () => {
+        const lang = i18n.language; // ✅ Get the current language dynamically
+
+        const token = localStorage.getItem("adminToken");
+        setIsAdmin(!!token); // ✅ True if token exists
+
+        fetch(`http://localhost:8080/api/projects?lang=${lang}`) // ✅ Fetch projects based on language
+            .then((response) => response.json())
+            .then((data) => {
+                const processedData = data.map((project: Project, index: number) => ({
+                    ...project,
+                    id: project.id ?? index,
+                    name: lang === "fr" ? project.nameFr : project.nameEn,
+                    description: lang === "fr" ? project.descriptionFr : project.descriptionEn // ✅ Select the correct description
+                }));
+                setProjects(processedData);
+            })
+            .catch((error) => {
+                console.error(t("fetchProjectsError"), error);
+            });
+    };
 
 
     const handleViewDetails = (project: Project) => {
@@ -167,6 +176,18 @@ const Projects: React.FC = () => {
     const handleAddProjectSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        const lang = i18n.language; // ✅ Get the current language dynamically
+
+        const newProjectData = {
+            nameEn: newProject.name,  // ✅ Always store both names
+            nameFr: newProject.name,  // ✅ Use the same value initially
+            descriptionEn: newProject.description,  // ✅ Store both descriptions
+            descriptionFr: newProject.description,
+            technologies: newProject.technologies,
+            link: newProject.link,
+            image: newProject.image
+        };
+
         try {
             const response = await fetch("http://localhost:8080/api/projects", {
                 method: "POST",
@@ -174,14 +195,20 @@ const Projects: React.FC = () => {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${localStorage.getItem("adminToken")}`,
                 },
-                body: JSON.stringify(newProject),
+                body: JSON.stringify(newProjectData),
             });
 
-            if (response.ok) {
-                const addedProject = await response.json();
-                setProjects([...projects, addedProject]);
-                handleCloseAddProjectModal();
+            if (!response.ok) {
+                throw new Error("Failed to add project");
             }
+
+            console.log("Newly added project:", newProjectData); // ✅ Debugging log
+
+            // ✅ Fetch the updated list from the backend immediately
+            fetchProjects();
+
+            // ✅ Close modal
+            handleCloseAddProjectModal();
         } catch (error) {
             console.error("Error adding project:", error);
         }
