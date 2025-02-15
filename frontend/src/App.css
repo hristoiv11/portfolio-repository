@@ -20,10 +20,9 @@ body {
 }
 
 /* NAVBAR CSS */
-
 .navbar {
   background-color: #333;
-  padding: 1rem;
+  padding: 0.75rem 1rem;
   position: fixed;
   top: 0;
   left: 0;
@@ -32,23 +31,33 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* Prevents elements from wrapping */
+  height: 60px;
 }
 
+/* Ensures the navbar content is spaced properly */
+.navbar-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+/* Centers the main menu */
 .navbar-center {
   flex-grow: 1;
   text-align: center;
-  margin-right: 7rem;
 }
 
+/* Navbar Brand (Name) */
 .navbar-brand {
   color: white;
   font-size: 1.25rem;
   font-weight: bold;
-  margin-right: 2rem;
   white-space: nowrap;
 }
 
+/* Navigation Menu */
 .navbar ul {
   list-style: none;
   display: inline-flex;
@@ -71,9 +80,9 @@ body {
   border-radius: 5px;
 }
 
+/* LOGIN / LOGOUT BUTTON */
 .navbar-login {
   margin-left: auto;
-  margin-right: 2rem;
 }
 
 .login-button {
@@ -108,6 +117,7 @@ body {
   background-color: #c0392b;
 }
 
+/* ADMIN STATUS MESSAGE */
 .admin-status {
   position: fixed;
   bottom: 10px;
@@ -119,8 +129,9 @@ body {
   font-size: 14px;
 }
 
+/* LANGUAGE SWITCHER */
 .language-switcher {
-  margin-right: 1rem; /* Add space between language switcher and login button */
+  margin-left: auto; /* Ensures the switcher stays at the right */
 }
 
 .language-toggle {
@@ -137,43 +148,88 @@ body {
   background-color: #0056b3;
 }
 
-{/*for responsivness*/}
-/* NAVBAR RESPONSIVENESS */
+/* ICONS & BUTTONS CONTAINER (FOR PC VIEW) */
+.navbar-icons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: auto;
+}
+
+/* HAMBURGER MENU */
+.hamburger {
+  display: none; /* Hidden on PC */
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 3px;
+  background-color: white;
+  margin: 4px 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* ACTIVE STATE: Turns into 'X' */
+.hamburger.open span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* MOBILE NAVBAR */
 @media (max-width: 1024px) {
   .navbar {
-    flex-direction: column;
-    padding: 0.5rem;
+    height: 50px; /* Reduce height for better visibility */
+    padding: 0.5rem 1rem;
   }
 
-  .navbar ul {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .navbar-center {
-    margin-right: 0;
-    text-align: center;
-    flex-grow: unset;
-  }
-
-  .navbar-login {
-    margin: 0;
-  }
-
-  .navbar ul {
-    width: 100%;
-    justify-content: center;
-  }
-}
-@media (max-width: 768px) {
-  .navbar {
-    padding: 1rem;
-  }
-
-  .navbar ul {
-    display: flex;
-    flex-direction: column;
+  /* Align name + icons in one row */
+  .navbar-content {
+    flex-direction: row;
     align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Ensure navbar-center (menu) is hidden initially */
+  .navbar-center {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 50px; /* Adjust based on navbar height */
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    padding: 1rem 0;
+    z-index: 999;
+    text-align: center;
+  }
+
+  .navbar-center.open {
+    display: flex; /* Show menu when toggled */
+  }
+
+  /* Ensure links are aligned properly */
+  .navbar ul {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .navbar ul li {
+    display: block;
+    padding: 0.5rem 0;
   }
 
   .navbar a {
@@ -182,7 +238,18 @@ body {
     width: 100%;
     text-align: center;
   }
+
+  /* Show hamburger menu only for mobile */
+  .hamburger {
+    display: block;
+  }
+
+  /* Hide language switcher and login on navbar, move them inside the menu */
+  .navbar-icons {
+    display: none;
+  }
 }
+
 
 /* PROJECTS CSS */
 
@@ -540,10 +607,14 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 2rem;
   padding: 2rem;
   color: white;
   text-align: center;
+  background-color: #1e293b;
+  min-height: 100vh;
+  width: 100%;
 }
 
 .oval-container {
@@ -670,15 +741,46 @@ body {
 }
 
 @media (max-width: 768px) {
+  .about {
+    min-height: 100vh; /* Ensure background covers full screen */
+    padding: 1rem;
+    width: 100%; /* Use 100% instead of 100vw to avoid shift */
+    overflow-x: hidden; /* Prevent unwanted scrolling */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Keep content centered */
+  }
+
   .oval-container,
   .languages-container {
     width: 95%;
+    max-width: 600px; /* Prevent stretching too wide */
     padding: 1.5rem;
+    border-radius: 30px; /* Reduce border-radius for smaller screens */
+    text-align: center;
+  }
+
+  .about-image {
+    width: 180px; /* Adjust image size for smaller screens */
+    height: 180px;
+  }
+
+  .flag {
+    width: 80px;
+    height: 60px;
   }
 }
 
-/*SKILLS PAGE CSS */
+/* Prevent horizontal scrolling globally */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%; /* Keep at 100% to avoid shift */
+  overflow-x: hidden; /* Hide unwanted horizontal scrolling */
+}
 
+
+/*SKILLS PAGE CSS */
 .skills-page {
   padding: 2rem;
   text-align: center;
@@ -697,6 +799,7 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   gap: 2rem;
+  align-items: stretch;
 }
 
 .skill-category {
@@ -750,22 +853,6 @@ body {
   color: #007bff;
   margin-right: 0.5rem;
 }
-
-@media (max-width: 768px) {
-  .skills {
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .skill-category {
-    flex: 1 1 100%;
-  }
-
-  .skill-category ul {
-    grid-template-columns: 1fr;
-  }
-}
-
 .btn-add {
   position: relative;
   top: -20px; /* Move it upwards */
@@ -803,6 +890,20 @@ body {
 
   .skill-category {
     max-width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .skills {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .skill-category {
+    width: 100%;
+    max-width: 500px;
+    min-height: auto; /* Allow it to grow if needed */
   }
 }
 

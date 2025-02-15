@@ -2,8 +2,8 @@ DROP TABLE IF EXISTS projects;
 CREATE TABLE IF NOT EXISTS projects (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     projectid VARCHAR(36) NOT NULL UNIQUE,
-    name_en VARCHAR(255) NOT NULL,
-    name_fr VARCHAR(255) NOT NULL,
+    name_en TEXT,
+    name_fr TEXT,
     description_en TEXT,
     description_fr TEXT,
     technologies VARCHAR(255),

@@ -46,7 +46,7 @@ public class TranslationController {
                 "aboutUpdatedSuccess", "languageAddedSuccess",
 
                 // Contact Page
-                "contactTitle", "infoTitle", "email", "linkedin",
+                "contactZaglavie","contactTitle", "infoTitle", "email", "linkedin",
                 "formName", "formEmail", "formSubject", "formMessage",
                 "formSend", "formSending", "formSuccess", "formError", "formFailure",
 

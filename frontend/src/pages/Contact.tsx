@@ -54,8 +54,8 @@ const Contact: React.FC = () => {
 
     return (
         <div className="contact-page">
+            <h1>{t("contactZaglavie")}</h1>
             <div className="contact-container">
-                {/* Contact Info */}
                 <div className="contact-info-section">
                     <h1>{t("contactTitle")}</h1>
                     <div className="contact-info">

@@ -42,23 +42,6 @@ public class ProjectServiceImpl implements ProjectService{
         return projectResponseDTOList;
     }
 
-    /*
-    @Override
-    public ProjectResponseDTO getProjectByProjectID(String projectId) {
-
-        Project project = projectRepository.findProjectByProjectId(projectId);
-
-        if(project == null){
-            throw new NotFoundException("Unknown projectId: " + projectId);
-        }
-
-        ProjectResponseDTO projectResponseDTO = new ProjectResponseDTO();
-        BeanUtils.copyProperties(project,projectResponseDTO);
-        return projectResponseDTO;
-    }
-
-     */
-
     @Override
     public ProjectResponseDTO getProjectByProjectID(String projectId) {
         Project project = projectRepository.findProjectByProjectId(projectId);
@@ -82,18 +65,35 @@ public class ProjectServiceImpl implements ProjectService{
 
     @Override
     public ProjectResponseDTO addProject(ProjectRequestDTO projectRequestDTO) {
-
         Project project = new Project();
-        BeanUtils.copyProperties(projectRequestDTO,project);
+
         project.setProjectId(UUID.randomUUID().toString());
+
+        // ✅ Ensure both English and French names & descriptions are saved
+        project.setNameEn(projectRequestDTO.getNameEn() != null ? projectRequestDTO.getNameEn() : projectRequestDTO.getNameFr());
+        project.setNameFr(projectRequestDTO.getNameFr() != null ? projectRequestDTO.getNameFr() : projectRequestDTO.getNameEn());
+        project.setDescriptionEn(projectRequestDTO.getDescriptionEn() != null ? projectRequestDTO.getDescriptionEn() : projectRequestDTO.getDescriptionFr());
+        project.setDescriptionFr(projectRequestDTO.getDescriptionFr() != null ? projectRequestDTO.getDescriptionFr() : projectRequestDTO.getDescriptionEn());
+
+        project.setTechnologies(projectRequestDTO.getTechnologies());
+        project.setLink(projectRequestDTO.getLink());
+        project.setImage(projectRequestDTO.getImage());
 
         Project savedProject = projectRepository.save(project);
 
-        ProjectResponseDTO projectResponseDTO = new ProjectResponseDTO();
-        BeanUtils.copyProperties(savedProject,projectResponseDTO);
-
-        return projectResponseDTO;
+        return new ProjectResponseDTO(
+                savedProject.getProjectId(),
+                savedProject.getNameEn(),
+                savedProject.getNameFr(),
+                savedProject.getDescriptionEn(),
+                savedProject.getDescriptionFr(),
+                savedProject.getTechnologies(),
+                savedProject.getLink(),
+                savedProject.getImage()
+        );
     }
+
+
 
     /*
     @Override

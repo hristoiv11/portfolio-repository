@@ -67,25 +67,8 @@ public class ProjectController {
 
     @PostMapping()
     public ResponseEntity<ProjectResponseDTO> addProject(@RequestBody ProjectRequestDTO projectRequestDTO) {
-
         return ResponseEntity.status(HttpStatus.CREATED).body(projectService.addProject(projectRequestDTO));
     }
-
-    /*
-    @PutMapping("/{projectId}")
-    public ResponseEntity<ProjectResponseDTO> updateProject(@RequestBody ProjectRequestDTO projectRequestDTO,
-                                                            @PathVariable String projectId){
-        try{
-            ProjectResponseDTO updateProject = projectService.updateProject(projectRequestDTO,projectId);
-            return ResponseEntity.status(HttpStatus.OK).body(updateProject);
-        }
-        catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-
-    }
-
-     */
 
     @PutMapping("/{projectId}")
     public ResponseEntity<ProjectResponseDTO> updateProject(@RequestBody ProjectRequestDTO projectRequestDTO,

@@ -62,6 +62,7 @@
     }
   },
   "contact": {
+    "contactZaglavie": "Contact",
     "contactTitle": "Me Contacter",
     "infoTitle": "Informations de Contact",
     "email": "E-mail",
@@ -146,8 +147,8 @@
   "skills": {
     "skillsTitle": "Compétences",
     "addSkill": "Ajouter une compétence",
-    "updateSkill": "Mettre à jour la compétence",
-    "deleteSkill": "Supprimer la compétence",
+    "updateSkill": "Mettre à jour ",
+    "deleteSkill": "Supprimer",
     "selectCategory": "Sélectionner une catégorie",
     "selectSkill": "Sélectionner une compétence",
     "selectSkillToUpdate": "Sélectionner la compétence à mettre à jour",
