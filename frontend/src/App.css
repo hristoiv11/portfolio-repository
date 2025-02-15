@@ -1047,6 +1047,17 @@ button:hover {
 
 /* LOGIN PAGE CSS */
 
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* Ensures full screen height without extra scrolling */
+  background-color: #1e293b;
+  width: 100%;
+  padding: 1rem; /* Prevents overflow on smaller screens */
+  overflow: hidden; /* Prevents any extra scrollbars */
+}
+
 .login {
   background-color: #ffffff;
   border-radius: 1rem;
@@ -1055,6 +1066,7 @@ button:hover {
   width: 100%;
   max-width: 400px;
   text-align: center;
+  overflow: hidden;
 }
 
 .login h1 {
@@ -1115,9 +1127,17 @@ button:hover {
 }
 
 @media (max-width: 768px) {
+  .login-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Ensures full height */
+    padding: 1rem;
+  }
   .login {
     padding: 1.5rem;
     width: 90%;
+    max-width: 350px;
   }
 
   .login button {
@@ -1151,13 +1171,13 @@ button:hover {
 
 .review-form,
 .review-list {
-  flex: 1 1 calc(50% - 2rem);
-  max-width: 600px;
+  flex: 1 1 60%;
+  max-width: 700px;
   background: #ffffff;
   color: #333;
   border-radius: 1rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
+  padding: 2.5rem;
   text-align: left;
 }
 
@@ -1215,17 +1235,6 @@ button:hover {
   font-size: 1rem;
   font-weight: bold;
   margin-top: 0.5rem;
-}
-
-@media (max-width: 768px) {
-  .review-container {
-    flex-direction: column;
-  }
-
-  .review-form,
-  .review-list {
-    max-width: 100%;
-  }
 }
 
 .star-rating span {
@@ -1355,6 +1364,7 @@ button:hover {
   .review-form,
   .review-list {
     padding: 1.5rem;
+    width: 100%;
   }
 
   .star-rating span {

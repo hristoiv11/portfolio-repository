@@ -38,6 +38,7 @@ const Login: React.FC = () => {
     };
 
     return (
+        <div className="login-page">
         <div className="login">
             <h1>{t("loginTitle")}</h1>
             {error && <p style={{ color: "red" }}>{error}</p>}
@@ -66,6 +67,7 @@ const Login: React.FC = () => {
                 </div>
                 <button type="submit">{t("loginButton")}</button>
             </form>
+        </div>
         </div>
     );
 };
