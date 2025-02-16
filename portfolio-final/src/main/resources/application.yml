@@ -1,0 +1,16 @@
+---
+spring:
+  config:
+    activate:
+      on-profile: digitalocean
+  datasource:
+    url: ${SPRING_DIGITALOCEAN_URL}
+    username: ${SPRING_DIGITALOCEAN_USERNAME}
+    password: ${SPRING_DATASOURCE_PASS}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: create  # Change this temporarily to create tables
+    show-sql: true
