@@ -32,10 +32,10 @@ services:
     env_file:
       - .env
     environment:
-      SPRING_PROFILES_ACTIVE: docker
-      SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/portfolio-db
-      SPRING_DATASOURCE_USERNAME: user
-      SPRING_DATASOURCE_PASSWORD: pwd
+      SPRING_PROFILES_ACTIVE: digitalocean
+      SPRING_DATASOURCE_URL: ${SPRING_DIGITALOCEAN_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DIGITALOCEAN_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASS}
     depends_on:
       - database
 
