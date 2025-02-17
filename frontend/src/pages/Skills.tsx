@@ -19,11 +19,13 @@ const Skills: React.FC = () => {
     const [showUpdateModal, setShowUpdateModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState<string>("");
-    const [_selectedSkill, setSelectedSkill] = useState<string>("");
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [_selectedSkill, _setSelectedSkill] = useState<string>("");
     const [selectedSkillToUpdate, setSelectedSkillToUpdate] = useState<string>("");
     const [newSkillName, setNewSkillName] = useState<string>("");
     const [selectedSkillToDelete, setSelectedSkillToDelete] = useState<string>("");
-    const [_newSkill, setNewSkill] = useState<{ category: string; skill: string }>({ category: "", skill: "" });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [_newSkill, _setNewSkill] = useState<{ category: string; skill: string }>({ category: "", skill: "" });
     const categoryNames: { [key: string]: string } = {
         languages: t("languagesSkill"),
         frameworks: t("frameworks"),
@@ -51,7 +53,7 @@ const Skills: React.FC = () => {
             .then((response) => response.json())
             .then((data) => {
                 setSkills({
-                    skillId: data.skillId,
+                    skillId: data.skillId ?? "",
                     languages: data.languages || "",
                     frameworks: data.frameworks || "",
                     tools: data.tools || "",
@@ -148,7 +150,7 @@ const Skills: React.FC = () => {
 
 
         const updatedSkills = {
-            skillId: skills?.skillId,
+            skillId: skills?.skillId ?? "",
             languages: selectedCategory === "languages"
                 ? skills?.languages.replace(selectedSkillToUpdate, newSkillName)
                 : skills?.languages || "",
@@ -210,7 +212,7 @@ const Skills: React.FC = () => {
 
         try {
             const updatedSkills = {
-                skillId: skills?.skillId,
+                skillId: skills?.skillId ?? "",
                 languages: selectedCategory === "languages"
                     ? skills?.languages.split(", ").filter(skill => skill !== selectedSkillToDelete).join(", ")
                     : skills?.languages || "",

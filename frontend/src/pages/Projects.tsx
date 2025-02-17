@@ -8,7 +8,11 @@ interface Project {
     id: number | null;
     projectId: string;
     name: string;
+    nameFr?: string; // ✅ Optional
+    nameEn?: string; // ✅ Optional
     description: string;
+    descriptionEn?: string;
+    descriptionFr?: string;
     technologies: string;
     link: string;
     image: string;
