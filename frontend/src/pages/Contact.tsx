@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import "../App.css";
 import {useTranslation} from "react-i18next";
-import {t} from "i18next";
-
 const Contact: React.FC = () => {
-    const { i18n } = useTranslation();
+    const { t} = useTranslation();
     const [formData, setFormData] = useState({ name: "", email: "", subject: "",message: "" });
     const [isSending, setIsSending] = useState(false); // ✅ Disable button when sending
     const [statusMessage, setStatusMessage] = useState<string | null>(null); // ✅ Display status message

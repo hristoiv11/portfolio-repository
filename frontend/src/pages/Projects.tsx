@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
-import i18n from "../i18n";
 import {useTranslation} from "react-i18next";
-import {t} from "i18next";
 interface Project {
     id: number | null;
     projectId: string;
@@ -19,7 +17,7 @@ interface Project {
 }
 
 const Projects: React.FC = () => {
-    const { i18n } = useTranslation();
+    const { t, i18n } = useTranslation();
     const [projects, setProjects] = useState<Project[]>([]);
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
     const [isAdmin, setIsAdmin] = useState<boolean>(false);

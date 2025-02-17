@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
 import "../App.css";
 import {useTranslation} from "react-i18next";
-import {t} from "i18next";
 
 interface Skills {
-    skillId: string;
-    languages: string;
-    frameworks: string;
-    tools: string;
-    databaseTechnologies: string;
-    methodologies: string;
+    skillId: string | undefined;
+    languages: string | undefined;
+    frameworks: string | undefined;
+    tools: string | undefined;
+    databaseTechnologies: string | undefined;
+    methodologies: string | undefined;
 }
 
 const Skills: React.FC = () => {
-    const { i18n } = useTranslation();
+    const { t } = useTranslation();
     const [skills, setSkills] = useState<Skills | null>(null);
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [showAddModal, setShowAddModal] = useState(false);
