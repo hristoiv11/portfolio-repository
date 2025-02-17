@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-//import '../css/Projects.css';
 import "../App.css";
 import i18n from "../i18n";
 import {useTranslation} from "react-i18next";
