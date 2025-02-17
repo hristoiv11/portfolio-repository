@@ -63,14 +63,14 @@ public class EmailServiceImpl implements EmailService{
                             <blockquote>%s</blockquote>
                             <br>
                             <p>
-                                <a href="http://localhost:8080/api/reviews/approve/%d" 
+                                <a href="https://portfolio-app-wkqsz.ondigitalocean.app/api/reviews/approve/%d" 
                                    style="display:inline-block; padding:12px 20px; font-size:14px; 
                                           font-weight:bold; color:white; background-color:#28a745; 
                                           text-decoration:none; border-radius:5px;">
                                     ✅ Approve
                                 </a>
                                 &nbsp;
-                                <a href="http://localhost:8080/api/reviews/reject/%d" 
+                                <a href="https://portfolio-app-wkqsz.ondigitalocean.app/api/reviews/reject/%d" 
                                    style="display:inline-block; padding:12px 20px; font-size:14px; 
                                           font-weight:bold; color:white; background-color:#dc3545; 
                                           text-decoration:none; border-radius:5px;">
