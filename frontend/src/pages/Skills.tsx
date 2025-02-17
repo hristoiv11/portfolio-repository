@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../App.css";
 import {useTranslation} from "react-i18next";
+import {t} from "i18next";
 
 interface Skills {
     skillId: string;
@@ -12,7 +13,7 @@ interface Skills {
 }
 
 const Skills: React.FC = () => {
-    const { t } = useTranslation();
+    const { i18n } = useTranslation();
     const [skills, setSkills] = useState<Skills | null>(null);
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [showAddModal, setShowAddModal] = useState(false);
