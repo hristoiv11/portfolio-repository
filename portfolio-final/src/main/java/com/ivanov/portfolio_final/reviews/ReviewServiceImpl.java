@@ -62,9 +62,9 @@ public class ReviewServiceImpl implements ReviewService {
                 Message:
                 %s
                 
-                To approve, click: <a href="http://localhost:8080/api/reviews/approve/%d">Approve ✅</a>
+                To approve, click: <a href="https://portfolio-app-wkqsz.ondigitalocean.app/api/reviews/approve/%d">Approve ✅</a>
                 <br>
-                To reject, click: <a href="http://localhost:8080/api/reviews/reject/%d">Reject ❌</a>
+                To reject, click: <a href="https://portfolio-app-wkqsz.ondigitalocean.app/api/reviews/reject/%d">Reject ❌</a>
                 """,
                 review.getName(), review.getName(), review.getRating(), review.getMessage(), review.getId(), review.getId()
         );
