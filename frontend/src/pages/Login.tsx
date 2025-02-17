@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
 import {useTranslation} from "react-i18next";
-import {t} from "i18next";
 
 const Login: React.FC = () => {
-    const { i18n } = useTranslation();
+    const { t} = useTranslation();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");

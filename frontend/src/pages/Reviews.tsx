@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import "../App.css";
 import {useTranslation} from "react-i18next";
-import {t} from "i18next";
 
 interface Review {
     id: number;
@@ -11,7 +10,7 @@ interface Review {
 }
 
 const Reviews: React.FC = () => {
-    const { i18n } = useTranslation();
+    const { t} = useTranslation();
     const [reviews, setReviews] = useState<Review[]>([]);
     const [name, setName] = useState<string>('');
     const [message, setMessage] = useState<string>('');

@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {useTranslation} from "react-i18next";
-import {t} from "i18next";
-
 const Logout: React.FC = () => {
-    const { i18n } = useTranslation();
+    const { t} = useTranslation();
     const navigate = useNavigate();
 
     useEffect(() => {
