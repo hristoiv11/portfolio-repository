@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../App.css";
 import {useTranslation} from "react-i18next";
 import i18n from "../i18n";
+import {t} from "i18next";
 interface AboutData {
     aboutId: string;
     image: string; // Holds the URL or Base64 string of the image
@@ -12,7 +13,7 @@ interface AboutData {
 }
 
 const About: React.FC = () => {
-    const { t } = useTranslation();
+    const { i18n } = useTranslation();
     const [aboutData, setAboutData] = useState<AboutData | null>(null);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
     const [showAddLanguageModal, setShowAddLanguageModal] = useState(false);

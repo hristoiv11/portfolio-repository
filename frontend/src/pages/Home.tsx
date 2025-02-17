@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import "../App.css";
 import {useTranslation} from "react-i18next";
+import {t} from "i18next";
 
 const Home: React.FC = () => {
-    const { t } = useTranslation();
+    const { i18n } = useTranslation();
     const [showCVOptions, setShowCVOptions] = useState<boolean>(false);
 
     const handleDownloadCV = (language: string) => {
