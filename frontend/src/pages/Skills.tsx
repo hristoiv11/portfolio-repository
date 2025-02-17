@@ -53,12 +53,12 @@ const Skills: React.FC = () => {
             .then((response) => response.json())
             .then((data) => {
                 setSkills({
-                    skillId: data.skillId ?? "",
-                    languages: data.languages || "",
-                    frameworks: data.frameworks || "",
-                    tools: data.tools || "",
-                    databaseTechnologies: data.databaseTechnologies || "",
-                    methodologies: data.methodologies || "",
+                    skillId: data.skillId ?? "", // Default to empty string if undefined
+                    languages: data.languages ?? "",
+                    frameworks: data.frameworks ?? "",
+                    tools: data.tools ?? "",
+                    databaseTechnologies: data.databaseTechnologies ?? "",
+                    methodologies: data.methodologies ?? "",
                 });
             })
             .catch((error) => console.error("Error fetching skills:", error));
@@ -340,7 +340,7 @@ const Skills: React.FC = () => {
                                 <h2>{categoryNames[category] || category}</h2>
                                 <ul>
                                     {skillsArray
-                                        ? skillsArray.split(", ").map((skill, index) => (
+                                        ? skillsArray.split(", ").map((skill: string, index: number) => (
                                             <li key={index}>{skill}</li>
                                         ))
                                         : null}

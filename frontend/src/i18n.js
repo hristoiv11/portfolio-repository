@@ -3,6 +3,11 @@ import { initReactI18next } from "react-i18next";
 import HttpBackend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 
+const i18nBackendUrl = import.meta.env.VITE_BACKEND_URL;
+console.log("i18n Backend URL:", i18nBackendUrl);
+
+const translationsUrl = `${i18nBackendUrl}api/translations?lang={{lng}}`;
+console.log("Fetching translations from:", translationsUrl);
 i18n
     .use(HttpBackend) // Loads translations from backend
     .use(LanguageDetector) // Detects user language
@@ -12,7 +17,7 @@ i18n
         fallbackLng: "en",
         debug: true,
         backend: {
-            loadPath: "http://localhost:8080/api/translations?lang={{lng}}", // Fetch from backend
+            loadPath: translationsUrl, // Fetch from backend
         },
         interpolation: { escapeValue: false },
     })
