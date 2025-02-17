@@ -77,26 +77,26 @@ const Skills: React.FC = () => {
         console.log("Skills Backend URL:", backendUrl);
 
         const updatedSkills = {
-            skillId: skills?.skillId,
+            skillId: skills?.skillId ?? "",
             languages: selectedCategory === "languages"
                 ? (skills?.languages ? `${skills.languages}, ${newSkillName}` : newSkillName)
-                : skills?.languages || "",
+                : skills?.languages ?? "",
 
             frameworks: selectedCategory === "frameworks"
                 ? (skills?.frameworks ? `${skills.frameworks}, ${newSkillName}` : newSkillName)
-                : skills?.frameworks || "",
+                : skills?.frameworks ?? "",
 
             tools: selectedCategory === "tools"
                 ? (skills?.tools ? `${skills.tools}, ${newSkillName}` : newSkillName)
-                : skills?.tools || "",
+                : skills?.tools ?? "",
 
             databaseTechnologies: selectedCategory === "databaseTechnologies"
                 ? (skills?.databaseTechnologies ? `${skills.databaseTechnologies}, ${newSkillName}` : newSkillName)
-                : skills?.databaseTechnologies || "",
+                : skills?.databaseTechnologies ?? "",
 
             methodologies: selectedCategory === "methodologies"
                 ? (skills?.methodologies ? `${skills.methodologies}, ${newSkillName}` : newSkillName)
-                : skills?.methodologies || "",
+                : skills?.methodologies ?? "",
         };
 
         console.log("Updated Skills Data:", updatedSkills);
@@ -152,24 +152,24 @@ const Skills: React.FC = () => {
         const updatedSkills = {
             skillId: skills?.skillId ?? "",
             languages: selectedCategory === "languages"
-                ? skills?.languages.replace(selectedSkillToUpdate, newSkillName)
-                : skills?.languages || "",
+                ? skills?.languages?.replace(selectedSkillToUpdate, newSkillName) ?? ""
+                : skills?.languages ?? "",
 
             frameworks: selectedCategory === "frameworks"
-                ? skills?.frameworks.replace(selectedSkillToUpdate, newSkillName)
-                : skills?.frameworks || "",
+                ? skills?.frameworks?.replace(selectedSkillToUpdate, newSkillName) ?? ""
+                : skills?.frameworks ?? "",
 
             tools: selectedCategory === "tools"
-                ? skills?.tools.replace(selectedSkillToUpdate, newSkillName)
-                : skills?.tools || "",
+                ? skills?.tools?.replace(selectedSkillToUpdate, newSkillName) ?? ""
+                : skills?.tools ?? "",
 
             databaseTechnologies: selectedCategory === "databaseTechnologies"
-                ? skills?.databaseTechnologies.replace(selectedSkillToUpdate, newSkillName)
-                : skills?.databaseTechnologies || "",
+                ? skills?.databaseTechnologies?.replace(selectedSkillToUpdate, newSkillName) ?? ""
+                : skills?.databaseTechnologies ?? "",
 
             methodologies: selectedCategory === "methodologies"
-                ? skills?.methodologies.replace(selectedSkillToUpdate, newSkillName)
-                : skills?.methodologies || "",
+                ? skills?.methodologies?.replace(selectedSkillToUpdate, newSkillName) ?? ""
+                : skills?.methodologies ?? "",
         };
 
         console.log("Updated Skills Data Before Sending:", updatedSkills);
@@ -214,24 +214,24 @@ const Skills: React.FC = () => {
             const updatedSkills = {
                 skillId: skills?.skillId ?? "",
                 languages: selectedCategory === "languages"
-                    ? skills?.languages.split(", ").filter(skill => skill !== selectedSkillToDelete).join(", ")
-                    : skills?.languages || "",
+                    ? skills?.languages?.split(", ").filter(skill => skill !== selectedSkillToDelete).join(", ") ?? ""
+                    : skills?.languages ?? "",
 
                 frameworks: selectedCategory === "frameworks"
-                    ? skills?.frameworks.split(", ").filter(skill => skill !== selectedSkillToDelete).join(", ")
-                    : skills?.frameworks || "",
+                    ? skills?.frameworks?.split(", ").filter(skill => skill !== selectedSkillToDelete).join(", ") ?? ""
+                    : skills?.frameworks ?? "",
 
                 tools: selectedCategory === "tools"
-                    ? skills?.tools.split(", ").filter(skill => skill !== selectedSkillToDelete).join(", ")
-                    : skills?.tools || "",
+                    ? skills?.tools?.split(", ").filter(skill => skill !== selectedSkillToDelete).join(", ") ?? ""
+                    : skills?.tools ?? "",
 
                 databaseTechnologies: selectedCategory === "databaseTechnologies"
-                    ? skills?.databaseTechnologies.split(", ").filter(skill => skill !== selectedSkillToDelete).join(", ")
-                    : skills?.databaseTechnologies || "",
+                    ? skills?.databaseTechnologies?.split(", ").filter(skill => skill !== selectedSkillToDelete).join(", ") ?? ""
+                    : skills?.databaseTechnologies ?? "",
 
                 methodologies: selectedCategory === "methodologies"
-                    ? skills?.methodologies.split(", ").filter(skill => skill !== selectedSkillToDelete).join(", ")
-                    : skills?.methodologies || "",
+                    ? skills?.methodologies?.split(", ").filter(skill => skill !== selectedSkillToDelete).join(", ") ?? ""
+                    : skills?.methodologies ?? "",
             };
 
             const skillsUrl = `${backendUrl}api/skills/${skills?.skillId}`;
