@@ -10,12 +10,16 @@ const Login: React.FC = () => {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-
+    const authBackendUrl = import.meta.env.VITE_BACKEND_URL;
+    console.log("Auth Backend URL:", authBackendUrl);
     const handleLogin = async (event: React.FormEvent) => {
         event.preventDefault();
 
+        const loginUrl = `${authBackendUrl}api/auth/login`;
+        console.log("Logging in via:", loginUrl);
+
         try {
-            const response = await fetch("http://localhost:8080/api/auth/login", {
+            const response = await fetch(loginUrl, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password }),

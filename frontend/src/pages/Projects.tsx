@@ -31,8 +31,8 @@ const Projects: React.FC = () => {
         link: "",
         image: "",
     });
-    const navigate = useNavigate();
-
+    const _navigate = useNavigate();
+    console.log(_navigate)
 
     /*
     useEffect(() => {
@@ -65,13 +65,18 @@ const Projects: React.FC = () => {
     }, [i18n.language]); // ✅ Re-fetch when the language changes
 
 
+    const projectsBackendUrl = import.meta.env.VITE_BACKEND_URL;
+    console.log("Projects Backend URL:", projectsBackendUrl);
     const fetchProjects = () => {
         const lang = i18n.language; // ✅ Get the current language dynamically
 
         const token = localStorage.getItem("adminToken");
         setIsAdmin(!!token); // ✅ True if token exists
 
-        fetch(`http://localhost:8080/api/projects?lang=${lang}`) // ✅ Fetch projects based on language
+        const projectsUrl = `${projectsBackendUrl}api/projects?lang=${lang}`;
+        console.log("Fetching projects from:", projectsUrl);
+
+        fetch(projectsUrl) // ✅ Fetch projects based on language
             .then((response) => response.json())
             .then((data) => {
                 const processedData = data.map((project: Project, index: number) => ({
@@ -101,11 +106,16 @@ const Projects: React.FC = () => {
         setShowDeleteSuccess(false); // Reset success message
     };
 
+    const deleteBackendUrl = import.meta.env.VITE_BACKEND_URL;
+    console.log("Projects Backend URL:", deleteBackendUrl);
     const confirmDeleteProject = async () => {
         if (!deleteProjectId) return;
 
+        const deleteProjectUrl = `${projectsBackendUrl}api/projects/${deleteProjectId}`;
+        console.log("Deleting project from:", deleteProjectUrl);
+
         try {
-            const response = await fetch(`http://localhost:8080/api/projects/${deleteProjectId}`, {
+            const response = await fetch(deleteProjectUrl, {
                 method: "DELETE",
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("adminToken")}`,
@@ -173,10 +183,13 @@ const Projects: React.FC = () => {
         }
     };
 
+    const addingBackendUrl = import.meta.env.VITE_BACKEND_URL;
+    console.log("Projects Backend URL:", addingBackendUrl);
     const handleAddProjectSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const lang = i18n.language; // ✅ Get the current language dynamically
+        const _lang = i18n.language;
+        console.log(_lang);// ✅ Get the current language dynamically
 
         const newProjectData = {
             nameEn: newProject.name,  // ✅ Always store both names
@@ -188,8 +201,11 @@ const Projects: React.FC = () => {
             image: newProject.image
         };
 
+        const addProjectUrl = `${projectsBackendUrl}api/projects`;
+        console.log("Adding project to:", addProjectUrl);
+
         try {
-            const response = await fetch("http://localhost:8080/api/projects", {
+            const response = await fetch(addProjectUrl, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -242,6 +258,8 @@ const Projects: React.FC = () => {
 
      */
 
+    const updatingBackendUrl = import.meta.env.VITE_BACKEND_URL;
+    console.log("Projects Backend URL:", updatingBackendUrl);
     const handleUpdateProjectSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!updateProject) return;
@@ -259,8 +277,11 @@ const Projects: React.FC = () => {
             link: updateProject.link,
         };
 
+        const updateProjectUrl = `${projectsBackendUrl}api/projects/${updateProject.projectId}?lang=${lang}`;
+        console.log("Updating project at:", updateProjectUrl);
+
         try {
-            const response = await fetch(`http://localhost:8080/api/projects/${updateProject.projectId}?lang=${lang}`, {
+            const response = await fetch(updateProjectUrl, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
