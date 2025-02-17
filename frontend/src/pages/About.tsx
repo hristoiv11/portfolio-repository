@@ -6,6 +6,8 @@ interface AboutData {
     aboutId: string;
     image: string; // Holds the URL or Base64 string of the image
     description: string;
+    descriptionEn?: string;
+    descriptionFr?: string;
     languages: { name: string; flagUrl: string }[]; // Array of objects with name and flagUrl
 }
 
@@ -14,9 +16,8 @@ const About: React.FC = () => {
     const [aboutData, setAboutData] = useState<AboutData | null>(null);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
     const [showAddLanguageModal, setShowAddLanguageModal] = useState(false);
-    const [showDeleteLanguageModal, setShowDeleteLanguageModal] = useState(false);
     const [newDescription, setNewDescription] = useState<string>("");
-    const [selectedImage, setSelectedImage] = useState<File | null>(null);
+    const [_selectedImage, setSelectedImage] = useState<File | null>(null);
     const [newLanguage, setNewLanguage] = useState<string>("");
     const [newFlagUrl, setNewFlagUrl] = useState<string>("");
     const [selectedImagePreview, setSelectedImagePreview] = useState<string | null>(null);
@@ -64,13 +65,20 @@ const About: React.FC = () => {
 
      */
 
+
+
     useEffect(() => {
         const lang = i18n.language; // ✅ Get the current language dynamically
 
         const token = localStorage.getItem("adminToken");
         setIsAdmin(!!token); // ✅ True if token exists
 
-        fetch(`http://localhost:8080/api/about/1?lang=${lang}`) // ✅ Fetch based on selected language
+        const backendUrl = import.meta.env.VITE_BACKEND_URL;
+        console.log("Backend URL:", backendUrl);
+        const aboutUrl = `${backendUrl}api/about/1?lang=${lang}`;
+        console.log("Fetching from:", aboutUrl);
+
+        fetch(aboutUrl) // ✅ Fetch based on selected language
             .then((response) => response.json())
             .then((data) => {
                 let languagesArray: { name: string; flagUrl: string }[] = [];
@@ -88,7 +96,7 @@ const About: React.FC = () => {
                 setAboutData({
                     aboutId: data.aboutId,
                     image: data.image,
-                    description: lang === "fr" ? data.descriptionFr : data.descriptionEn, // ✅ Select correct description
+                    description: lang === "fr" ? data.descriptionFr ?? data.description : data.descriptionEn ?? data.description, // ✅ Ensure fallback
                     languages: languagesArray
                 });
 
@@ -105,12 +113,14 @@ const About: React.FC = () => {
         return <p>{t("loading")}</p>; // Show a loading message while fetching data
     }
 
-    // Handle file selection
+    /*
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             setSelectedImage(e.target.files[0]);
         }
     };
+
+     */
 
     /*
     const handleUpdateAbout = async (e: React.FormEvent) => {
@@ -172,6 +182,8 @@ const About: React.FC = () => {
 
      */
 
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    console.log("Backend URL:", backendUrl);
     const handleUpdateAbout = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!aboutData) return;
@@ -184,8 +196,11 @@ const About: React.FC = () => {
             descriptionFr: lang === "fr" ? newDescription : aboutData.descriptionFr, // ✅ Update only French if selected
         };
 
+        const updateUrl = `${backendUrl}api/about/${aboutData.aboutId}?lang=${lang}`;
+        console.log("Updating About via:", updateUrl);
+
         try {
-            const response = await fetch(`http://localhost:8080/api/about/${aboutData.aboutId}?lang=${lang}`, {
+            const response = await fetch(updateUrl, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -231,7 +246,8 @@ const About: React.FC = () => {
     };
 
 
-
+    const updateBackendUrl = import.meta.env.VITE_BACKEND_URL;
+    console.log("Update Backend URL:", updateBackendUrl);
     const handleAddLanguage = async () => {
         if (!newLanguage || !newFlagUrl) {
             console.error(t("errorInvalidLanguageData"));
@@ -274,8 +290,12 @@ const About: React.FC = () => {
             flags: JSON.stringify(updatedFlagsObject) // ✅ Fix: Preserve all flags
         };
 
+        const updateUrl = `${updateBackendUrl}api/about/${aboutData.aboutId}`;
+        console.log("Updating About via:", updateUrl);
+
+
         try {
-            const response = await fetch(`http://localhost:8080/api/about/${aboutData.aboutId}`, {
+            const response = await fetch(updateUrl, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(updatedAbout),
@@ -320,6 +340,8 @@ const About: React.FC = () => {
     };
 
 
+    const deleteBackendUrl = import.meta.env.VITE_BACKEND_URL;
+    console.log("Delete Backend URL:", deleteBackendUrl);
     const handleDeleteLanguageClick = (languageName: string) => {
         setSelectedLanguageToDelete(languageName);
         setDeleteConfirmation(true); // Show confirmation modal
@@ -329,8 +351,11 @@ const About: React.FC = () => {
     const confirmDeleteLanguage = async () => {
         if (!selectedLanguageToDelete) return;
 
+        const deleteUrl = `${deleteBackendUrl}api/about/${aboutData?.aboutId}/languages/${selectedLanguageToDelete}`;
+        console.log("Deleting from:", deleteUrl);
+
         try {
-            const response = await fetch(`http://localhost:8080/api/about/${aboutData?.aboutId}/languages/${selectedLanguageToDelete}`, {
+            const response = await fetch(deleteUrl, {
                 method: "DELETE",
                 headers: { "Authorization": `Bearer ${localStorage.getItem("adminToken")}` },
             });
@@ -352,8 +377,6 @@ const About: React.FC = () => {
             console.error(t("errorDeletingLanguage"), error);
         }
     };
-
-
 
     return (
         <div className="about">

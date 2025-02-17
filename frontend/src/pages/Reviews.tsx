@@ -22,14 +22,18 @@ const Reviews: React.FC = () => {
     const [showDeleteSuccess, setShowDeleteSuccess] = useState<boolean>(false);
 
 
-    // ✅ Function to fetch approved reviews
+    const reviewsBackendUrl = import.meta.env.VITE_BACKEND_URL;
+    console.log("Reviews Backend URL:", reviewsBackendUrl);
     const fetchReviews = async () => {
 
         const token = localStorage.getItem("adminToken");
         setIsAdmin(!!token); // Admin if token exists
 
+        const reviewsUrl = `${reviewsBackendUrl}api/reviews/approved`;
+        console.log("Fetching reviews from:", reviewsUrl);
+
         try {
-            const response = await fetch("http://localhost:8080/api/reviews/approved");
+            const response = await fetch(reviewsUrl);
             if (!response.ok) throw new Error("Failed to fetch reviews");
             const data: Review[] = await response.json();
             setReviews(data);
@@ -46,7 +50,8 @@ const Reviews: React.FC = () => {
         return () => clearInterval(interval); // Cleanup on unmount
     }, []);
 
-    // ✅ Handle review submission
+    const subBackendUrl = import.meta.env.VITE_BACKEND_URL;
+    console.log("Reviews Backend URL:", subBackendUrl);
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
@@ -60,8 +65,11 @@ const Reviews: React.FC = () => {
 
         const reviewData = { name, message, rating };
 
+        const submitReviewUrl = `${reviewsBackendUrl}api/reviews/submit`;
+        console.log("Submitting review to:", submitReviewUrl);
+
         try {
-            const response = await fetch("http://localhost:8080/api/reviews/submit", {
+            const response = await fetch(submitReviewUrl, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -92,6 +100,7 @@ const Reviews: React.FC = () => {
         setShowDeleteSuccess(false); // Reset success message
     };
 
+    /*
     const handleDeleteReview = async (reviewId: number) => {
         if (!isAdmin) return;
 
@@ -111,11 +120,18 @@ const Reviews: React.FC = () => {
         }
     };
 
+     */
+
+    const delBackendUrl = import.meta.env.VITE_BACKEND_URL;
+    console.log("Reviews Backend URL:", delBackendUrl);
     const confirmDeleteReview = async () => {
         if (!deleteReviewId) return;
 
+        const deleteReviewUrl = `${reviewsBackendUrl}api/reviews/${deleteReviewId}`;
+        console.log("Deleting review from:", deleteReviewUrl);
+
         try {
-            const response = await fetch(`http://localhost:8080/api/reviews/${deleteReviewId}`, {
+            const response = await fetch(deleteReviewUrl, {
                 method: "DELETE",
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("adminToken")}`,

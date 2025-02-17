@@ -13,13 +13,18 @@ const Contact: React.FC = () => {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
+    const contactBackendUrl = import.meta.env.VITE_BACKEND_URL;
+    console.log("Contact Backend URL:", contactBackendUrl);
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSending(true);
         setStatusMessage(null);
 
+        const contactUrl = `${contactBackendUrl}api/contact/send`;
+        console.log("Sending form data to:", contactUrl);
+
         try {
-            const response = await fetch("http://localhost:8080/api/contact/send", {
+            const response = await fetch(contactUrl, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

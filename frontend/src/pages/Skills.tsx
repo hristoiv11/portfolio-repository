@@ -19,11 +19,11 @@ const Skills: React.FC = () => {
     const [showUpdateModal, setShowUpdateModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState<string>("");
-    const [selectedSkill, setSelectedSkill] = useState<string>("");
+    const [_selectedSkill, setSelectedSkill] = useState<string>("");
     const [selectedSkillToUpdate, setSelectedSkillToUpdate] = useState<string>("");
     const [newSkillName, setNewSkillName] = useState<string>("");
     const [selectedSkillToDelete, setSelectedSkillToDelete] = useState<string>("");
-    const [newSkill, setNewSkill] = useState<{ category: string; skill: string }>({ category: "", skill: "" });
+    const [_newSkill, setNewSkill] = useState<{ category: string; skill: string }>({ category: "", skill: "" });
     const categoryNames: { [key: string]: string } = {
         languages: t("languagesSkill"),
         frameworks: t("frameworks"),
@@ -32,15 +32,22 @@ const Skills: React.FC = () => {
         methodologies: t("methodologies"),
     };
 
-    const [updateSkill, setUpdateSkill] = useState<{ category: string; skill: string }>({ category: "", skill: "" });
+    const [_updateSkill, _setUpdateSkill] = useState<{ category: string; skill: string }>({ category: "", skill: "" });
     const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false);
     const [showDeleteSuccess, setShowDeleteSuccess] = useState<boolean>(false);
 
     useEffect(() => {
+
+        const backendUrl = import.meta.env.VITE_BACKEND_URL;
+        console.log("Skills Backend URL:", backendUrl);
+
         const token = localStorage.getItem("adminToken");
         setIsAdmin(!!token);
 
-        fetch("http://localhost:8080/api/skills/1")
+        const skillsUrl = `${backendUrl}api/skills/1`;
+        console.log("Fetching skills from:", skillsUrl);
+
+        fetch(skillsUrl)
             .then((response) => response.json())
             .then((data) => {
                 setSkills({
@@ -63,6 +70,9 @@ const Skills: React.FC = () => {
         }
 
         console.log("Adding Skill:", newSkillName, "to category:", selectedCategory);
+
+        const backendUrl = import.meta.env.VITE_BACKEND_URL;
+        console.log("Skills Backend URL:", backendUrl);
 
         const updatedSkills = {
             skillId: skills?.skillId,
@@ -90,7 +100,11 @@ const Skills: React.FC = () => {
         console.log("Updated Skills Data:", updatedSkills);
 
         try {
-            const response = await fetch(`http://localhost:8080/api/skills/${skills?.skillId}`, {
+
+            const skillsUrl = `${backendUrl}api/skills/${skills?.skillId}`;
+            console.log("Sending request to:", skillsUrl);
+
+            const response = await fetch(skillsUrl, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -129,6 +143,10 @@ const Skills: React.FC = () => {
             newSkill: newSkillName,
         });
 
+        const backendUrl = import.meta.env.VITE_BACKEND_URL;
+        console.log("Skills Backend URL:", backendUrl);
+
+
         const updatedSkills = {
             skillId: skills?.skillId,
             languages: selectedCategory === "languages"
@@ -155,7 +173,11 @@ const Skills: React.FC = () => {
         console.log("Updated Skills Data Before Sending:", updatedSkills);
 
         try {
-            const response = await fetch(`http://localhost:8080/api/skills/${skills?.skillId}`, {
+
+            const skillsUrl = `${backendUrl}api/skills/${skills?.skillId}`;
+            console.log("Sending request to:", skillsUrl);
+
+            const response = await fetch(skillsUrl, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -183,6 +205,9 @@ const Skills: React.FC = () => {
     const confirmDeleteSkill = async () => {
         if (!selectedCategory || !selectedSkillToDelete) return;
 
+        const backendUrl = import.meta.env.VITE_BACKEND_URL;
+        console.log("Skills Backend URL:", backendUrl);
+
         try {
             const updatedSkills = {
                 skillId: skills?.skillId,
@@ -207,7 +232,10 @@ const Skills: React.FC = () => {
                     : skills?.methodologies || "",
             };
 
-            const response = await fetch(`http://localhost:8080/api/skills/${skills?.skillId}`, {
+            const skillsUrl = `${backendUrl}api/skills/${skills?.skillId}`;
+            console.log("Sending request to:", skillsUrl);
+
+            const response = await fetch(skillsUrl, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -236,6 +264,7 @@ const Skills: React.FC = () => {
         return <p>Loading...</p>;
     }
 
+    /*
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
 
@@ -247,6 +276,8 @@ const Skills: React.FC = () => {
             setNewSkillName(value);
         }
     };
+
+     */
 
     const handleUpdateClick = (category: string) => {
         const skillList = skills?.[category as keyof Skills]?.split(", ") || [];
