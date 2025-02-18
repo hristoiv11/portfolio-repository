@@ -64,7 +64,7 @@ const Navbar: React.FC = () => {
                             <>
                                 <li>
                                     <button onClick={() => { toggleLanguage(); setMenuOpen(false); }} className="language-toggle">
-                                        {i18n.language.toUpperCase()}
+                                        {i18n.language === "en" ? "FR" : "EN"}
                                     </button>
                                 </li>
                                 <li>
@@ -88,7 +88,7 @@ const Navbar: React.FC = () => {
                     <div className="navbar-icons">
                         <div className="language-switcher">
                             <button onClick={toggleLanguage} className="language-toggle">
-                                {i18n.language.toUpperCase()}
+                                {i18n.language === "en" ? "FR" : "EN"}
                             </button>
                         </div>
                         <div className="navbar-login">
