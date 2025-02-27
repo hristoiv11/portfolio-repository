@@ -79,7 +79,10 @@ public class TranslationController {
                 "projectUploadImage", "saveProject", "cancelProject", "yesDeleteProject", "close",
                 "clientBilling", "petClinic", "sneakerEcommerceWS", "sneakerEcommerce",
                 "shootingGame", "resumeBuilder","clientBillingDescription","petClinicDescription","sneakerEcommerceWSDescription",
-                "sneakerEcommerceDescription","shootingGameDescription","resumeBuilderDescription"
+                "sneakerEcommerceDescription","shootingGameDescription","resumeBuilderDescription",
+
+                //Footer
+                "footerMessage"
 
         };
 

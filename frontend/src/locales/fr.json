@@ -182,5 +182,8 @@
   "logout": {
     "logoutTitle": "Déconnexion en cours...",
     "logoutMessage": "Vous serez redirigé vers la page d'accueil."
+  },
+  "footerMes": {
+    "footerMessage": "Tous droits réservés."
   }
 }

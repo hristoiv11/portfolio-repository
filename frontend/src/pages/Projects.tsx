@@ -353,7 +353,7 @@ const Projects: React.FC = () => {
                                 {t("githubProject")}
                             </a>
 
-                            {project.name === "Client Management and Billing System" && (
+                            {project.name === t("clientBilling") && (
                                 <a
                                     href="https://compteexpress.com/"
                                     target="_blank"

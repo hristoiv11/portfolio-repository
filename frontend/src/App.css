@@ -120,7 +120,7 @@ body {
 /* ADMIN STATUS MESSAGE */
 .admin-status {
   position: fixed;
-  bottom: 10px;
+  bottom: 50px;
   left: 10px;
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
@@ -540,8 +540,6 @@ body {
     height: 180px;
   }
 }
-
-
 
 
 /* HOME PAGE CSS */
@@ -1371,3 +1369,24 @@ button:hover {
     font-size: 1.2rem;
   }
 }
+
+/* FOOTER STYLING */
+.footer {
+  text-align: center;
+  padding: 10px;
+  background: #333;
+  color: white;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    font-size: 12px;
+    padding: 8px;
+  }
+}
+

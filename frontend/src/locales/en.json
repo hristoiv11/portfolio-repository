@@ -178,5 +178,8 @@
   "logout": {
     "logoutTitle": "Logging Out...",
     "logoutMessage": "You will be redirected to the home page."
+  },
+  "footerMes": {
+    "footerMessage": "All rights reserved."
   }
 }

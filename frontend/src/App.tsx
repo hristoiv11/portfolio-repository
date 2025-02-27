@@ -9,8 +9,11 @@ import Navbar from "./navbar/Navbar.tsx";
 import Login from "./pages/Login.tsx";
 import Logout from "./pages/Logout.tsx";
 import {useEffect} from "react";
+import {useTranslation} from "react-i18next";
 
 function App() {
+
+    const { t} = useTranslation();
 
     useEffect(() => {
 
@@ -24,6 +27,7 @@ function App() {
     return (
         <Router>
             <Navbar/>
+            <div className="main-content">
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
@@ -33,8 +37,11 @@ function App() {
                 <Route path="/reviews" element={<Reviews />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/logout" element={<Logout />} />
-                {/*<Route path="/reviews" element={<Reviews />} />*/}
             </Routes>
+            </div>
+            <footer className="footer">
+                © Hristo Georgiev Ivanov. {t("footerMessage")}
+            </footer>
         </Router>
     );
 }
