@@ -42,4 +42,25 @@ CREATE TABLE IF NOT EXISTS reviews (
     approved BOOLEAN DEFAULT FALSE
 );
 
+/* DROP TABLE IF EXISTS experiences; */
+CREATE TABLE IF NOT EXISTS experiences (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    experienceid VARCHAR(36) NOT NULL UNIQUE,
+    company_name_en TEXT,
+    company_name_fr TEXT,
+    position_title_en TEXT,
+    position_title_fr TEXT,
+    description_en TEXT,
+    description_fr TEXT,
+    city_en TEXT,
+    city_fr TEXT,
+    country_en TEXT,
+    country_fr TEXT,
+    start_date DATE,
+    end_date DATE,
+    technologies VARCHAR(255),
+    image LONGBLOB,
+    type_en TEXT,
+    type_fr TEXT
+);
 

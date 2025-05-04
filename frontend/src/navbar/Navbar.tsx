@@ -55,6 +55,7 @@ const Navbar: React.FC = () => {
                         <li><Link to="/" onClick={() => setMenuOpen(false)}>{t("home")}</Link></li>
                         <li><Link to="/about" onClick={() => setMenuOpen(false)}>{t("about")}</Link></li>
                         <li><Link to="/projects" onClick={() => setMenuOpen(false)}>{t("projects")}</Link></li>
+                        <li><Link to="/experiences" onClick={() => setMenuOpen(false)}>{t("experiences")}</Link></li>
                         <li><Link to="/skills" onClick={() => setMenuOpen(false)}>{t("skills")}</Link></li>
                         <li><Link to="/contact" onClick={() => setMenuOpen(false)}>{t("contact")}</Link></li>
                         <li><Link to="/reviews" onClick={() => setMenuOpen(false)}>{t("reviews")}</Link></li>
