@@ -32,7 +32,7 @@ public class TranslationController {
                 "cvEnglish", "cvFrench", "leaveReview",
 
                 //NAVBAR
-                "home", "about", "projects", "skills", "contact", "reviews",
+                "home", "about", "projects", "experiences", "skills", "contact", "reviews",
 
                 // About Page
                 "aboutTitle", "languagesTitle", "noLanguages", "aboutDescription",
@@ -80,6 +80,16 @@ public class TranslationController {
                 "clientBilling", "petClinic", "sneakerEcommerceWS", "sneakerEcommerce",
                 "shootingGame", "resumeBuilder","clientBillingDescription","petClinicDescription","sneakerEcommerceWSDescription",
                 "sneakerEcommerceDescription","shootingGameDescription","resumeBuilderDescription",
+
+                // Experiences Page
+                "experiencesTitle", "addNewExperience", "viewDetailsExperience", "updateExperience",
+                "deleteExperience", "confirmDeleteExperience", "deleteExperienceSuccess",
+                "deleteExperienceFailure", "fetchExperiencesError", "createExperienceTitle",
+                "updateExperienceTitle", "experienceDetailsTitle", "confirmDeleteTitleExperience",
+                "experienceCompanyName", "experiencePosition", "experienceDescription", "experienceCity",
+                "experienceCountry", "experienceStartDate", "experienceEndDate", "experienceTechnologies",
+                "experienceUploadImage", "experienceType", "saveExperience", "cancelExperience",
+                "yesDeleteExperience", "closeExperience", "peyConsult", "peyConsultDescription",
 
                 //Footer
                 "footerMessage"

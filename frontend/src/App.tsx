@@ -10,6 +10,7 @@ import Login from "./pages/Login.tsx";
 import Logout from "./pages/Logout.tsx";
 import {useEffect} from "react";
 import {useTranslation} from "react-i18next";
+import Experiences from "./pages/Experiences.tsx";
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/projects" element={<Projects />} />
+                <Route path="/experiences" element={<Experiences />} />
                 <Route path="/skills" element={<Skills />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/reviews" element={<Reviews />} />
